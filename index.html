@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>מיליונים 360 — v34</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --nav:#1E1B4B;--pur:#6C63F0;--purL:#C4BAF5;--pale:#EAE8FF;
+  --bg:#F0EFFF;--card:#fff;--border:#E4E2F5;--text:#1E1B4B;--sub:#64748B;
+  --grn:#10B981;--grnL:#D1FAE5;--red:#EF4444;--redL:#FEE2E2;
+  --yel:#F59E0B;--yelL:#FEF3C7;--org:#F97316;--teal:#0891B2;
+}
+body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);
+  height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+#app{display:flex;flex:1;overflow:hidden;min-height:0}
+/* SIDEBAR */
+#sidebar{width:340px;min-width:300px;background:linear-gradient(170deg,#1A1535 0%,#231E52 60%,#1A1535 100%);
+  display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+#logo{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;gap:10px;flex-shrink:0}
+.li{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7B6FE8,#C4BAF5);
+  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;
+  color:#fff;flex-shrink:0}
+.ln{color:#fff;font-weight:900;font-size:13px}
+.ls{color:rgba(255,255,255,0.38);font-size:9px;margin-top:1px}
+.lv{color:#7B6FE8;font-size:8px;font-weight:700;margin-top:1px}
+#mtabs{padding:10px 13px 6px;border-bottom:1px solid rgba(255,255,255,0.08);
+  display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0}
+.mb{padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.07);color:#fff;text-align:right;cursor:pointer;
+  transition:all .2s;font-family:inherit}
+.mb.on{border-color:var(--pur);background:rgba(123,111,232,0.3)}
+.mb .mn{font-weight:700;font-size:11px}.mb .ms{color:rgba(255,255,255,0.4);font-size:9px;margin-top:1px}
+#ltabs{display:flex;padding:7px 13px 0;gap:3px;flex-shrink:0}
+.lt{flex:1;padding:6px 2px;border-radius:7px 7px 0 0;border:none;
+  background:transparent;color:rgba(255,255,255,0.38);font-size:9px;font-weight:700;
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  border-bottom:2px solid transparent;cursor:pointer;font-family:inherit}
+.lt.on{color:#fff;background:rgba(255,255,255,0.1);border-bottom-color:var(--pur)}
+.lt span{font-size:14px}
+#panel{flex:1;overflow-y:auto;padding:11px 13px 30px}
+#panel::-webkit-scrollbar{width:3px}
+#panel::-webkit-scrollbar-thumb{background:rgba(123,111,232,0.35);border-radius:3px}
+/* SLIDERS */
+.sw{margin-bottom:13px}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4px}
+.sl{font-size:11px;font-weight:700;color:rgba(255,255,255,0.9)}
+.sht{font-size:9px;color:rgba(255,255,255,0.37);margin-top:1px;line-height:1.3}
+.sv{font-size:14px;font-weight:900;line-height:1;text-align:left;flex-shrink:0;margin-right:6px}
+.sc{font-size:9px;color:#86efac;margin-top:1px;text-align:left}
+.st{position:relative;height:24px;cursor:pointer}
+.st input[type=range]{position:absolute;top:0;left:0;width:100%;height:100%;
+  opacity:0;cursor:pointer;z-index:3;margin:0;padding:0;
+  -webkit-appearance:none;appearance:none}
+.sb{position:absolute;top:50%;transform:translateY(-50%);
+  left:0;right:0;height:5px;border-radius:3px;pointer-events:none;z-index:1}
+.sd{position:absolute;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;border-radius:50%;background:#fff;
+  pointer-events:none;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
+.sm{display:flex;justify-content:space-between;margin-top:2px}
+.sm span{font-size:8px;color:rgba(255,255,255,0.22)}
+/* SECTION */
+.sec-h{width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:8px 11px;border-radius:8px;border:none;color:#fff;font-size:11px;
+  font-weight:700;text-align:right;cursor:pointer;font-family:inherit;margin-bottom:3px}
+.sec-b{padding:8px 4px 4px}
+/* NI */
+.ni{display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.ni-l{font-size:10px;color:rgba(255,255,255,0.75)}.ni-h{font-size:8px;color:rgba(255,255,255,0.3)}
+.ni-r{display:flex;align-items:center;gap:4px}.ni-u{font-size:9px;color:rgba(255,255,255,0.33)}
+.ni input{width:74px;padding:4px 6px;border-radius:6px;border:1px solid rgba(123,111,232,0.45);
+  background:rgba(123,111,232,0.18);color:#fff;font-size:11px;font-weight:700;
+  text-align:center;outline:none;font-family:inherit;-moz-appearance:textfield}
+.ni input::-webkit-inner-spin-button,.ni input::-webkit-outer-spin-button{-webkit-appearance:none}
+/* TOGGLE */
+.tg{display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.tg-l{font-size:10px;color:rgba(255,255,255,0.75)}
+.tg-s{width:36px;height:20px;border-radius:999px;position:relative;cursor:pointer;
+  transition:background .2s;flex-shrink:0}
+.tg-s.on{background:var(--pur)}.tg-s.off{background:rgba(255,255,255,0.2)}
+.tg-d{position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s}
+.tg-s.on .tg-d{left:19px}.tg-s.off .tg-d{left:3px}
+/* TIERS */
+.tg-grid{display:grid;grid-template-columns:65px 65px 72px 26px;gap:4px;margin-bottom:6px}
+.tg-head{font-size:8px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;padding-bottom:2px}
+.tg-grid input{padding:5px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.08);color:#fff;font-size:11px;text-align:center;
+  outline:none;width:100%;font-family:inherit;-moz-appearance:textfield}
+.tg-grid input::-webkit-inner-spin-button,.tg-grid input::-webkit-outer-spin-button{-webkit-appearance:none}
+.tr-rate{border-color:rgba(239,68,68,0.5)!important;background:rgba(239,68,68,0.15)!important;
+  color:#fca5a5!important;font-weight:700!important}
+.tr-rm{padding:4px;border-radius:5px;border:none;background:rgba(239,68,68,0.3);
+  color:#fca5a5;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
+.add-tr{width:100%;padding:6px;border-radius:7px;border:1px dashed rgba(239,68,68,0.4);
+  background:rgba(239,68,68,0.08);color:#fca5a5;font-size:10px;font-weight:600;
+  cursor:pointer;font-family:inherit;margin-top:4px}
+/* MEDIA OVERRIDES */
+.ov-list{margin-bottom:10px}
+.ov-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;
+  background:rgba(245,158,11,0.12);border-radius:8px;padding:8px 10px;
+  border:1px solid rgba(245,158,11,0.3)}
+.ov-item select,.ov-item input{flex:1;padding:5px 8px;border-radius:6px;
+  border:1px solid rgba(245,158,11,0.45);background:rgba(245,158,11,0.15);
+  color:#fff;font-size:11px;font-weight:700;text-align:center;outline:none;
+  font-family:inherit;-moz-appearance:textfield}
+.ov-item input::-webkit-inner-spin-button,.ov-item input::-webkit-outer-spin-button{-webkit-appearance:none}
+.ov-item select{background:rgba(30,27,75,0.9);cursor:pointer}
+.ov-rm{padding:3px 8px;border-radius:5px;border:none;background:rgba(239,68,68,0.3);
+  color:#fca5a5;cursor:pointer;font-size:12px;font-family:inherit}
+.add-ov{width:100%;padding:8px;border-radius:8px;border:1px dashed rgba(245,158,11,0.4);
+  background:rgba(245,158,11,0.08);color:var(--yel);font-size:10px;font-weight:600;
+  cursor:pointer;font-family:inherit}
+/* EXTRA */
+.ex{background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;
+  margin-bottom:8px;border:1px solid rgba(255,255,255,0.1)}
+.ex.on{border-color:rgba(123,111,232,0.35)}
+.ex-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.ex-d{background:transparent;border:none;color:#fff;font-size:11px;font-weight:700;
+  outline:none;flex:1;font-family:inherit}
+.ex-rm{padding:2px 7px;border-radius:5px;border:none;background:rgba(239,68,68,0.25);
+  color:#fca5a5;cursor:pointer;font-size:11px;font-family:inherit}
+.ex-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ex-f label{display:block;font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:3px}
+.ex-f input,.ex-f select{width:100%;padding:5px;border-radius:6px;
+  border:1px solid rgba(123,111,232,0.45);background:rgba(123,111,232,0.15);
+  color:#fff;font-size:11px;font-weight:700;text-align:center;outline:none;
+  font-family:inherit;-moz-appearance:textfield}
+.ex-f input::-webkit-inner-spin-button,.ex-f input::-webkit-outer-spin-button{-webkit-appearance:none}
+.ex-f select{background:rgba(30,27,75,0.9);cursor:pointer;text-align:right}
+/* MAIN */
+#main{flex:1;overflow-y:auto;padding:18px 20px 40px;min-width:0}
+#main::-webkit-scrollbar{width:4px}
+#main::-webkit-scrollbar-thumb{background:rgba(123,111,232,0.25);border-radius:4px}
+#hdr{display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:14px;gap:12px}
+#hdr-left h1{font-size:20px;font-weight:900;margin-bottom:3px}
+#hdr-badge{border-radius:12px;padding:10px 14px;text-align:center;border:2px solid;
+  flex-shrink:0;font-size:11px;font-weight:900;line-height:1.4}
+#alert{border-radius:12px;padding:9px 16px;margin-bottom:13px;font-size:11px;
+  font-weight:700;text-align:center;display:none}
+/* KPIS */
+#kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px}
+.kp{background:var(--card);border-radius:14px;padding:14px 12px;border:2px solid transparent;
+  box-shadow:0 2px 20px rgba(108,99,240,0.08);transition:box-shadow .2s}
+.kp:hover{box-shadow:0 6px 30px rgba(108,99,240,0.15)}
+.kp-il{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.kp-i{font-size:17px}.kp-lb{font-size:9px;color:var(--sub);font-weight:600;line-height:1.3}
+.kp-v{font-size:21px;font-weight:900;line-height:1}
+.kp-s{font-size:8px;color:var(--sub);margin-top:4px;line-height:1.3}
+/* CHART */
+#ch-wrap{background:var(--card);border-radius:15px;padding:15px;
+  box-shadow:0 2px 12px rgba(123,111,232,0.09);border:1px solid var(--border);margin-bottom:14px}
+#ch-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#ch-top h2{font-size:12px;font-weight:800;color:var(--text)}
+.leg{display:flex;gap:10px}.lg{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--sub)}
+.lgd{width:10px;height:10px;border-radius:3px;border:1px solid var(--border)}
+svg#chart{width:100%;display:block}
+/* TABLE */
+#tb-wrap{background:var(--card);border-radius:15px;
+  box-shadow:0 2px 12px rgba(123,111,232,0.09);border:1px solid var(--border);overflow:hidden}
+#tb-hdr{padding:11px 15px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center}
+#tb-hdr h2{font-size:12px;font-weight:800;color:var(--text)}
+.mbs{display:flex;gap:4px}
+.mbt{padding:4px 9px;border-radius:7px;border:1px solid var(--border);
+  background:var(--bg);color:var(--sub);font-size:10px;font-weight:700;
+  cursor:pointer;font-family:inherit}
+.mbt.on{border-color:var(--pur);background:rgba(123,111,232,0.1);color:var(--pur)}
+#tb-sc{overflow:auto;max-height:420px}
+#tb-sc::-webkit-scrollbar{width:3px;height:3px}
+#tb-sc::-webkit-scrollbar-thumb{background:rgba(123,111,232,0.25);border-radius:3px}
+table{width:100%;border-collapse:collapse;font-size:10px}
+thead tr{background:var(--nav)}
+/* STICKY header and month column */
+thead tr th{position:sticky;top:0;z-index:3;background:var(--nav)}
+td:first-child,th:first-child{position:sticky;right:0;z-index:2;background:inherit}
+thead tr th:first-child{z-index:4;background:var(--nav)}
+th{padding:8px 7px;color:var(--purL);font-weight:700;font-size:8px;text-align:center;white-space:nowrap}
+td{padding:6px 7px;text-align:center;border-bottom:1px solid var(--border)}
+.m-bep td{background:#EDE9FE!important}.m-bep td:first-child{background:#EDE9FE!important}
+.m-ms td{padding:4px 14px;text-align:center;font-weight:700;font-size:10px}
+tr.r td{background:#FFF5F5}tr.r:nth-child(even) td{background:#FEF2F2}
+tr.r td:first-child{background:#FFF5F5}tr.r:nth-child(even) td:first-child{background:#FEF2F2}
+tr.o td{background:#FFFBEB}tr.o:nth-child(even) td{background:#FFFDE7}
+tr.o td:first-child{background:#FFFBEB}tr.o:nth-child(even) td:first-child{background:#FFFDE7}
+tr.g td{background:#F0FDF4}tr.g:nth-child(even) td{background:#F6FEFA}
+tr.g td:first-child{background:#F0FDF4}tr.g:nth-child(even) td:first-child{background:#F6FEFA}
+/* MOBILE */
+@media(max-width:640px){
+  #app{flex-direction:column}
+  #sidebar{width:100%;min-width:unset;height:100%}
+  #main{display:none;padding:14px}
+  #bnav{display:flex!important}
+  #kpis{grid-template-columns:1fr 1fr}
+}
+@media(min-width:641px) and (max-width:959px){#sidebar{width:300px;min-width:280px}}
+#bnav{display:none;background:var(--card);border-top:1px solid var(--border);
+  height:54px;flex-shrink:0}
+.bn{flex:1;border:none;background:transparent;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;font-size:9px;font-weight:700;
+  cursor:pointer;font-family:inherit;border-top:2px solid transparent}
+.bn.on{color:var(--pur);border-top-color:var(--pur)}.bn:not(.on){color:var(--sub)}
+.bn-i{font-size:17px}
+#scen-box{background:rgba(123,111,232,0.17);border-radius:12px;padding:13px;
+  margin-bottom:13px;border:1px solid rgba(123,111,232,0.38)}
+input[type=range]{-webkit-appearance:none;margin:0;padding:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height:1px}
+
+/* DESKTOP */
+@media(min-width:900px){
+  #sidebar{width:370px}
+  #main{padding:24px 32px 40px}
+  #kpis{gap:14px;margin-bottom:18px}
+  .kp{padding:18px 16px;border-radius:18px}
+  .kp-v{font-size:24px}
+  .kp-lb{font-size:10px}
+  h1{font-size:24px!important}
+  th{font-size:9px;padding:9px 8px}
+  td{font-size:10px;padding:7px 8px}
+  .mbt{padding:5px 12px;font-size:11px}
+  #tb-sc{max-height:480px}
+}
+@media(min-width:1200px){
+  #sidebar{width:420px}
+  #main{padding:30px 40px 50px}
+  .kp-v{font-size:28px}
+  h1{font-size:28px!important}
+  th{font-size:10px}
+  td{font-size:11px;padding:8px 9px}
+  #tb-sc{max-height:560px}
+}
+
+/* STEPPER+INPUT */
+.stp{margin-bottom:13px}
+.stp-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:3px}
+.stp-hint{font-size:8px;color:rgba(255,255,255,.3);margin-bottom:6px;display:block}
+.stp-calc{font-size:9px;color:#86efac;margin-top:4px;text-align:center}
+.stp-row{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.07);border-radius:11px;padding:3px}
+.stp-btn{width:38px;height:38px;border-radius:8px;border:none;font-size:19px;font-weight:900;
+  cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  user-select:none;-webkit-user-select:none;touch-action:none;transition:filter .1s}
+.stp-btn:active{filter:brightness(1.3)}
+.stp-m{background:rgba(239,68,68,.22);color:#fca5a5}
+.stp-p{background:rgba(16,185,129,.22);color:#86efac}
+.stp-inp{flex:1;border:none;background:transparent;color:#fff;font-size:17px;font-weight:900;
+  text-align:center;outline:none;font-family:inherit;min-width:0;padding:4px 2px;
+  -moz-appearance:textfield;cursor:text}
+.stp-inp::-webkit-inner-spin-button,.stp-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.stp-inp:focus{background:rgba(108,99,240,.18);border-radius:6px}
+
+.stop-row td{opacity:0.72}
+.stop-row td:first-child{border-right:3px solid #F59E0B!important}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div id="logo">
+      <div class="li">מ</div>
+      <div>
+        <div class="ln">מיליונים 360</div>
+        <div class="ls">סימולציה אינטראקטיבית</div>
+        <div class="lv">v34</div>
+      </div>
+    </div>
+    <div id="mtabs">
+      <button class="mb on" onclick="setModel(1)"><div class="mn">מסלול 1</div><div class="ms">תקורות+גיוס</div></button>
+      <button class="mb" onclick="setModel(2)"><div class="mn">מסלול 2</div><div class="ms">עמלה-ניכוי</div></button>
+      <button class="mb" onclick="setModel(3)"><div class="mn">מסלול 3</div><div class="ms">סליקה בלבד</div></button>
+      <button class="mb" onclick="setModel(4)"><div class="mn">מסלול 4</div><div class="ms">אחוז כולל (הו"ק+ח"פ)</div></button>
+    </div>
+    <div id="ltabs">
+      <button class="lt on" onclick="setTab('shared')"><span>🌐</span>משותף</button>
+      <button class="lt" onclick="setTab('model')"><span>📋</span>מסלול</button>
+      <button class="lt" onclick="setTab('media')"><span>📅</span>מדיה</button>
+      <button class="lt" onclick="setTab('extras')"><span>💳</span>נוספות</button>
+    </div>
+    <div id="panel"></div>
+  </aside>
+  <main id="main">
+    <div id="hdr">
+      <div id="hdr-left">
+        <div id="hdr-mod" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px"></div>
+        <h1>תחזית פיננסית</h1>
+        <div id="hdr-stats" style="font-size:10px;color:var(--sub);margin-top:3px"></div>
+      </div>
+      <div id="hdr-badge"></div>
+    </div>
+    <div id="alert"></div>
+    <div id="kpis">
+      <div class="kp" id="kp0"><div class="kp-il"><span class="kp-i">🟠</span><span class="kp-lb">איזון תזרימי</span></div><div class="kp-v" id="kv0">—</div><div class="kp-s">הכנסה = הוצאה חודשית</div></div>
+      <div class="kp" id="kp1"><div class="kp-il"><span class="kp-i">🟡</span><span class="kp-lb">החזרת השקעה</span></div><div class="kp-v" id="kv1">—</div><div class="kp-s">תזרים מצטבר חוצה אפס</div></div>
+      <div class="kp" id="kp2"><div class="kp-il"><span class="kp-i">💰</span><span class="kp-lb">סה"כ הושקע</span></div><div class="kp-v" id="kv2">—</div><div class="kp-s">מקסימום שיצא מהכיס</div></div>
+      <div class="kp" id="kp3"><div class="kp-il"><span class="kp-i">💎</span><span class="kp-lb" id="kv3-label">רווח נקי</span></div><div class="kp-v" id="kv3">—</div><div class="kp-s" id="kv3-sub">תזרים מצטבר</div></div>
+    </div>
+    <!-- Stop summary banner -->
+    <div id="stop-summary" style="display:none;border-radius:14px;padding:14px 16px;
+      background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(217,119,6,.1));
+      border:1px solid rgba(245,158,11,.4);margin-bottom:14px">
+      <div style="font-size:11px;font-weight:800;color:#FCD34D;margin-bottom:10px">
+        ⏸ תמונת מצב — הפסקה בחודש <span id="ss-month">?</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div style="text-align:center">
+          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">תורמים שנשארו</div>
+          <div id="ss-pool" style="font-size:19px;font-weight:900;color:#FCD34D">—</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">בחודש ההפסקה</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">גבייה עתידית צפויה</div>
+          <div id="ss-rev" style="font-size:19px;font-weight:900;color:#10B981">—</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">מחודש הפסקה→96</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">רווח כולל צפוי</div>
+          <div id="ss-cum" style="font-size:19px;font-weight:900;color:#7B6FE8">—</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">מחודש 1→96</div>
+        </div>
+      </div>
+    </div>
+    <div id="ch-wrap">
+      <div id="ch-top">
+        <h2>עקומת J — תזרים מצטבר</h2>
+        <div class="leg">
+          <div class="lg"><div class="lgd" style="background:#FEE2E2"></div>🔴 השקעה</div>
+          <div class="lg"><div class="lgd" style="background:#FEF3C7"></div>🟡 החזרה</div>
+          <div class="lg"><div class="lgd" style="background:#D1FAE5"></div>🟢 רווח</div>
+        </div>
+      </div>
+      <svg id="chart" viewBox="0 0 780 190"></svg>
+    </div>
+    <div id="tb-wrap">
+      <div id="tb-hdr">
+        <h2 id="tb-title">פירוט חודשי</h2>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          <div class="mbs">
+            <button class="mbt mbt-m on" data-m="12" onclick="setMonths(12)">12M</button>
+            <button class="mbt mbt-m" data-m="24" onclick="setMonths(24)">24M</button>
+            <button class="mbt mbt-m" data-m="48" onclick="setMonths(48)">48M</button>
+            <button class="mbt mbt-m" data-m="96" onclick="setMonths(96)">96M</button>
+          </div>
+          <button class="mbt" id="tbl-full-btn" onclick="toggleFullTable()">פירוט מלא</button>
+        </div>
+      </div>
+      <div id="tb-sc"><table id="tbl"></table></div>
+    </div>
+  </main>
+</div>
+<div id="bnav">
+  <button class="bn on" id="bn-in" onclick="mSwitch('in')"><span class="bn-i">🎛</span>הזנה</button>
+  <button class="bn" id="bn-out" onclick="mSwitch('out')"><span class="bn-i">📊</span>תוצאות</button>
+</div>
+
+<script>
+// ─── POLYFILLS ─────────────────────────────────────────────────
+if(!Array.prototype.findIndex){Array.prototype.findIndex=function(fn){for(var i=0;i<this.length;i++){if(fn(this[i],i,this))return i;}return -1;};}
+if(!String.prototype.startsWith){String.prototype.startsWith=function(s){return this.indexOf(s)===0;};}
+
+// ─── STATE ─────────────────────────────────────────────────────
+var S={
+  model:1, scenario:0, tab:'shared', months:12,
+  // Shared
+  media:30000, cpl:80, conv:0.30, hokPct:0.70,
+  avgHok:280, avgHp:150, susp:0.05,
+  vat:true, vatR:0.18,
+  hpConvRate:0.10,   // % ח"פ שהופכים הו"ק חודש הבא
+  renewRate:0.40,    // % שמחדשים בסיום תרומה
+  // Per-model
+  m:{
+    1:{comm:0.18,hokMax:18,tiers:[{f:1,t:18,r:0.035}],
+       mH:40,mR:200,fH:60,fR:180,ret:8000,dig:4500,sw:1200,prod:5000,grow:3},
+    2:{comm:0.18,hokMax:18,preDed:0.035,tiers:[{f:1,t:18,r:0.035}],
+       sw:1200,prod:5000,grow:3},
+    3:{comm:0.12,hokMax:18,tiers:[{f:1,t:18,r:0.035}],
+       sw:1200,prod:5000,grow:3},
+    4:{comm:0.22,hokMax:36,tiers:[{f:1,t:36,r:0.035}],
+       mH:40,mR:200,fH:60,fR:180,ret:8000,dig:4500,sw:1200,prod:5000,grow:3}
+  },
+  ovList:[],
+  stopMonth:0, // 0=ללא הפסקה, N=עצור קידום מחודש N
+  ex:[]
+};
+
+// ─── HELPERS ───────────────────────────────────────────────────
+function getMedia(m){
+  for(var i=0;i<S.ovList.length;i++){if(S.ovList[i].m===m)return S.ovList[i].amt;}
+  return S.media;
+}
+
+// Churn by DONATION lifecycle month (not calendar month)
+function churnAtDon(tiers,donMonth){
+  for(var i=0;i<tiers.length;i++){
+    var t=tiers[i];
+    if(t.f<=donMonth&&t.t>=donMonth&&t.r>0)return t.r;
+  }
+  return 0;
+}
+
+// ─── ENGINE ─────────────────────────────────────────────────────
+function runCalc(){
+  var mc=S.m[S.model];
+  var vatM=S.vat?1+S.vatR:1;
+  var scen=1+S.scenario/100;
+  var hokM=mc.hokMax||18;
+  var isOvh=S.model===1; // רק מסלול 1 יש תקורות; מסלול 4=עמלה בלבד
+  var gM=Math.pow(1+(mc.grow||3)/100,1/12)-1;
+
+  // Cohort slices: slices[j] = donors in their (j+1)-th donation month
+  var slices=[];for(var ii=0;ii<hokM;ii++)slices.push(0);
+  var lastHp=0;        // ח"פ מהחודש הקודם (לחישוב המרה)
+  var pendingRenew=0;  // חידושים ממתינים להיכנס לפול
+  var pendingRefund=0; // מסלול 1: קיזוז ביטולים מהחודש הקודם
+
+  var cum=0,rows=[];
+
+  for(var i=0;i<96;i++){
+    var m=i+1;
+    var isStopMonth=S.stopMonth>0&&m>=S.stopMonth;
+    var med=isStopMonth?0:getMedia(m);
+    var gf=Math.pow(1+gM,m-1);
+
+    // ── גיוס חדש ──
+    // הפסקת קידום מיושמת דרך med=0 (מאפס לידים). isStop נשמר false כדי
+    // לשמר התנהגות זהה לאתר המקורי (תקורות+תוכנה ממשיכות, העמלה דועכת טבעית).
+    var isStop=false;
+    var leads=isStop?0:Math.floor(med/S.cpl*Math.max(0.01,scen));
+    var nHok=isStop?0:Math.round(leads*S.conv*S.hokPct);
+    var nHp=isStop?0:Math.round(leads*S.conv*(1-S.hokPct));
+
+    // ── המרת ח"פ להו"ק (מהחודש הקודם) ──
+    var converted=Math.round(lastHp*S.hpConvRate);
+
+    // ── כניסות חדשות לפול: גיוס + המרות + חידושים ──
+    var newEntries=nHok+converted+pendingRenew;
+
+    // ── עיבוד פרוסות (cohort slices) ──
+    var newSlices=[];for(var ii=0;ii<hokM;ii++)newSlices.push(0);
+    var totalCanc=0,exitClearing=0;
+    var m1RefundCalc=0;  // קיזוז שייכנס לחודש הבא
+    var renewalsCount=0;
+
+    for(var j=0;j<hokM;j++){
+      var donMonth=j+1;
+      var chR=churnAtDon(mc.tiers,donMonth);
+      var canc=Math.round(slices[j]*chR);
+      var surviving=slices[j]-canc;
+      totalCanc+=canc;
+
+      // מסלול 1: חישוב קיזוז עמלה על ביטולים
+      // קיזוז = מבוטלים × חודשים שנותרו × ממוצע × עמלה × מע"מ
+      if(S.model===1&&canc>0){
+        var remaining=hokM-donMonth; // חודשים שנותרו לאחר החודש הנוכחי
+        if(remaining>0){
+          m1RefundCalc+=Math.round(canc*remaining*S.avgHok*mc.comm*vatM);
+        }
+      }
+
+      if(j===hokM-1){
+        // פרוסה אחרונה: סיום מחזור תרומה
+        renewalsCount=Math.round(surviving*(S.renewRate||0));
+        exitClearing+=Math.round((surviving-renewalsCount)*S.avgHok);
+        // השאר עוזבים. חידושים נכנסים לפול חודש הבא
+      } else {
+        newSlices[j+1]=surviving;
+      }
+    }
+
+    // כניסות חדשות לפרוסה 0 (חודש 1 של מחזור)
+    newSlices[0]=newEntries;
+    slices=newSlices;
+
+    // הכנה לחודש הבא
+    pendingRenew=renewalsCount;
+    lastHp=nHp;
+
+    // ── סטטיסטיקות פול ──
+    var totalPool=0;
+    for(var k=0;k<hokM;k++)totalPool+=slices[k];
+    var susp=Math.round(totalPool*S.susp);
+    var hokRev=Math.round((totalPool-susp)*S.avgHok);
+    var hpRev=Math.round(nHp*S.avgHp);
+    var rev=hokRev+hpRev;
+
+    // ── חישוב עמלה לפי מסלול ──
+    var comm;
+    var refundApplied=pendingRefund; // קיזוז מהחודש הקודם מופחת עכשיו
+    var renewBase=renewalsCount*S.avgHok*hokM; // בסיס עמלה לחידושים
+
+    if(S.model===1){
+      // עמלה על גיוס חדש + המרות ח"פ + חידושים, פחות קיזוז ביטולים
+      var acqBase1=(nHok+converted)*S.avgHok*hokM+nHp*S.avgHp;
+      var newComm1=Math.round(acqBase1*mc.comm*vatM);
+      var renewComm1=Math.round(renewBase*mc.comm*vatM);
+      comm=newComm1+renewComm1-refundApplied;
+      if(comm<0)comm=0; // עמלה לא יכולה להיות שלילית
+    } else if(S.model===2){
+      // עמלה על גיוס (בניכוי %) + חידושים. ביטולים = לא משפיעים על עמלה
+      var acqBase2=(nHok+converted)*S.avgHok*hokM+nHp*S.avgHp;
+      var acqComm2=Math.round(acqBase2*(1-(mc.preDed||0))*mc.comm*vatM);
+      var renewComm2=Math.round(renewBase*(1-(mc.preDed||0))*mc.comm*vatM);
+      comm=acqComm2+renewComm2;
+    } else {
+      // מסלולים 3+4: עמלה על גבייה חודשית בפועל
+      // ביטולים מקטינים פול → מקטינים גבייה → מקטינים עמלה אוטומטית
+      comm=Math.round(hokRev*mc.comm*vatM);
+    }
+
+    // שמירת קיזוז לחודש הבא (מסלול 1)
+    pendingRefund=m1RefundCalc;
+
+    // ── עלויות ──
+    var overhead=0;
+    if(isOvh&&!isStop){
+      overhead=Math.round((mc.mH*mc.mR+mc.fH*mc.fR+(mc.ret||0)+(mc.dig||0))*gf*vatM);
+    }
+    // מסלול 4 אין תקורות כלל; מסלול 1 אחרי הפסקה: רק sw נשאר
+    var swCost=(S.model===4||(isStop&&S.model!==1))?0:Math.round((mc.sw||1200)*vatM);
+    var prodCost=(m%3===0)?Math.round((mc.prod||5000)*vatM):0;
+
+    var extraCost=0,exLabels=[];
+    for(var xi=0;xi<S.ex.length;xi++){
+      var e=S.ex[xi];if(!e.on||!e.amt)continue;
+      var vm=e.iv?vatM:1;
+      if(e.fr==='M'&&m>=e.f&&m<=e.t)extraCost+=Math.round(e.amt*vm);
+      else if(e.fr==='Q'&&m>=e.f&&m<=e.t&&m%3===0)extraCost+=Math.round(e.amt*vm);
+      else if(e.fr==='O'&&m===e.f)extraCost+=Math.round(e.amt*vm);
+    }
+
+    var totalCost=comm+overhead+swCost+prodCost+med+extraCost;
+    var prof=rev-totalCost;
+    cum+=prof;
+
+    // ── Additional tracking fields for full table display ──
+    var renewEntered=newEntries-nHok-converted; // renewals that actually entered this month's pool
+    // Approximate clearing contribution (they entered slice[0] this month)
+    var convClearing=Math.round(converted*(1-S.susp)*S.avgHok);
+    var renewClearing=Math.round(renewEntered*(1-S.susp)*S.avgHok);
+    // Costs without VAT (base prices)
+    var vatDiv=vatM>1?vatM:1;
+    var commBase=Math.round(comm/vatDiv);
+    var overheadBase=Math.round(overhead/vatDiv);
+    var swBase=Math.round(swCost/vatDiv);
+    var prodBase=Math.round(prodCost/vatDiv);
+    var totalCostNoVat=commBase+overheadBase+swBase+prodBase+med+Math.round(extraCost/vatDiv);
+    // Cancellation clearing loss
+    var cancClearing=Math.round(totalCanc*S.avgHok);
+
+    rows.push({
+      m:m,leads:leads,nHok:nHok,nHp:nHp,
+      converted:converted,renewals:renewalsCount,renewEntered:renewEntered,
+      pool:totalPool,canc:totalCanc,susp:susp,
+      convClearing:convClearing,renewClearing:renewClearing,
+      hokRev:hokRev,hpRev:hpRev,rev:rev,
+      cancClearing:cancClearing,
+      exitClearing:exitClearing,
+      comm:comm,commBase:commBase,
+      overhead:overhead,overheadBase:overheadBase,
+      mediaCost:med,refund:refundApplied,
+      swCost:swCost,prodCost:prodCost,
+      totalCost:totalCost,totalCostNoVat:totalCostNoVat,
+      prof:prof,cum:Math.round(cum),exL:exLabels.join(","),isStop:isStop,
+      cIls:Math.round(totalCanc*S.avgHok)
+    });
+  }
+  return rows;
+}
+
+// ─── FORMAT ────────────────────────────────────────────────────
+function ilsS(n){
+  if(n==null||isNaN(n))return'—';
+  var a=Math.abs(n),s=n<0?'-':'';
+  if(a>=1e6)return s+'₪'+(a/1e6).toFixed(1)+'M';
+  if(a>=1e3)return s+'₪'+(a/1e3).toFixed(1)+'K';
+  return s+'₪'+Math.round(a);
+}
+function pct(n){return((n||0)*100).toFixed(1)+'%';}
+function nl(n){return(+(n||0)).toLocaleString('he-IL');}
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
+
+// ─── COLORS ────────────────────────────────────────────────────
+var MC={1:'#1E1B4B',2:'#065F46',3:'#92400E',4:'#7F1D1D'};
+var MN={1:'מסלול 1 — תקורות + עמלת גיוס',2:'מסלול 2 — עמלה בניכוי ביטול',
+        3:'מסלול 3 — עמלת סליקה בלבד',4:'מסלול 4 — תקורות + כל הגבייה'};
+
+
+
+function stpChg(inp,sid,mn,mx){
+  var raw=inp.value.replace(/[^0-9.\-]/g,'');
+  var v=parseFloat(raw);
+  if(!isNaN(v))slCh(sid,Math.max(mn,Math.min(mx,v)));
+  else{var el=document.getElementById('sv-'+sid);if(el)inp.value=el.value;}
+}
+function stpFocus(inp,sid){
+  inp.value=String(_gV(sid));
+}
+
+
+// STEPPERS — global interval, survives re-render
+var _SL={sc:'scenario',media:'media',cpl:'cpl',conv:'conv',hokPct:'hokPct',
+  avgHok:'avgHok',avgHp:'avgHp',susp:'susp',vatR:'vatR',
+  hpConvRate:'hpConvRate',renewRate:'renewRate'};
+function _gV(s){
+  if(_SL[s]!==undefined)return S[_SL[s]];
+  if(s==='comm')return S.m[S.model].comm;
+  if(s==='hokMax')return S.m[S.model].hokMax;
+  if(s==='preDed')return S.m[S.model].preDed||0.035;
+  return 0;
+}
+function _doStp(sid,dir,step,mn,mx){
+  var p=Math.pow(10,step<.01?4:step<.1?3:step<1?2:0);
+  var nv=Math.round((_gV(sid)+dir*step)*p)/p;
+  slCh(sid,Math.max(mn,Math.min(mx,nv)));
+}
+var _stpIv=null,_stpTo=null;
+function stpStop(){
+  if(_stpTo){clearTimeout(_stpTo);_stpTo=null;}
+  if(_stpIv){clearInterval(_stpIv);_stpIv=null;}
+}
+function stpPD(e,dir){
+  // Read data BEFORE re-render changes the button
+  var el=e.currentTarget||e.target;
+  var sid=el.dataset.s,step=+el.dataset.t,mn=+el.dataset.n,mx=+el.dataset.x;
+  stpStop();
+  _doStp(sid,dir,step,mn,mx);
+  _stpTo=setTimeout(function(){
+    _stpIv=setInterval(function(){_doStp(sid,dir,step,mn,mx);},90);
+  },380);
+}
+// Global stop — works even when button is destroyed by re-render
+document.addEventListener('pointerup',stpStop);
+document.addEventListener('pointercancel',stpStop);
+document.addEventListener('mouseup',stpStop);
+document.addEventListener('touchend',stpStop);
+function stpChg(inp,sid,mn,mx){
+  stpStop();
+  var v=parseFloat(inp.value.replace(/[^0-9.\-]/g,''));
+  if(!isNaN(v))slCh(sid,Math.max(mn,Math.min(mx,v)));
+  else{var el=document.getElementById('sv-'+sid);if(el)inp.value=el.value;}
+}
+function stpFocus(inp,sid){inp.value=String(_gV(sid));}
+
+// ─── RENDER RESULTS ────────────────────────────────────────────
+var DATA=[];
+function renderResults(){
+  DATA=runCalc();
+  var rows=DATA,mc=MC[S.model];
+  var bep=rows.findIndex(function(r){return r.cum>=0;});
+  var bal=rows.findIndex(function(r){return r.prof>=0;});
+  var maxInv=Math.abs(Math.min.apply(null,[0].concat(rows.map(function(r){return r.cum;}))));
+
+  // ── KPI 4: profit at SELECTED months (not always 96) ──
+  var dispIdx=Math.min(S.months,96)-1;
+  var p_disp=rows[dispIdx]?rows[dispIdx].cum:0;
+
+  var leads=Math.floor(S.media/S.cpl);
+  var ok=bep>=0;
+
+  document.getElementById('hdr-mod').textContent=MN[S.model];
+  document.getElementById('hdr-mod').style.color=mc;
+  document.getElementById('hdr-stats').textContent=
+    nl(leads)+' לידים/חודש → '+nl(Math.round(leads*S.conv*S.hokPct))+
+    ' הו"ק + '+nl(Math.round(leads*S.conv*(1-S.hokPct)))+' ח"פ'+
+    (S.scenario!==0?' | תרחיש: '+(S.scenario>0?'+':'')+S.scenario+'%':'');
+
+  var bd=document.getElementById('hdr-badge');
+  bd.style.color=ok?'#065F46':'#7F1D1D';
+  bd.style.borderColor=ok?'#10B981':'#EF4444';
+  bd.style.background=ok?'#D1FAE5':'#FEE2E2';
+  bd.innerHTML=ok?'✅ איזון<br>חודש '+(bep+1):'⚠️ לא מגיע<br>לאיזון';
+
+  var al=document.getElementById('alert');
+  if(!ok){
+    al.style.display='block';al.style.background='#FEE2E2';al.style.color='#7F1D1D';
+    al.textContent='⚠️ התכנית לא מגיעה לאיזון ב-96 חודשים — שנה נתונים כדי לשפר';
+  } else {
+    al.style.display='none';
+  }
+
+  var kc=['#F97316','#F59E0B','#EF4444','#7B6FE8'];
+  var kv=[
+    bal>=0?'חודש '+(bal+1):'לא הגיע',
+    ok?'חודש '+(bep+1):'לא הגיע',
+    ilsS(maxInv),
+    ilsS(p_disp)
+  ];
+  for(var i=0;i<4;i++){
+    document.getElementById('kv'+i).textContent=kv[i];
+    document.getElementById('kv'+i).style.color=kc[i];
+    document.getElementById('kp'+i).style.borderColor=kc[i]+'33';
+    document.getElementById('kp'+i).style.boxShadow='0 4px 16px '+kc[i]+'12';
+  }
+  // Update KPI 4 label to reflect selected months
+  document.getElementById('kv3-label').textContent='רווח נקי — '+S.months+'M';
+  document.getElementById('kv3-sub').textContent='תזרים מצטבר חודש '+S.months;
+
+  drawChart(rows,bep,mc);
+  drawTable(rows,bep,bal);
+
+  // ── Stop summary banner ─────────────────────────────────
+  var ss=document.getElementById('stop-summary');
+  if(ss){
+    if(S.stopMonth>0){
+      ss.style.display='block';
+      var si=S.stopMonth-1; // index of stop month
+      var stopRow=rows[si]||rows[rows.length-1];
+      // Sum of revenue from stop month to end
+      var futureRev=0;
+      for(var ri=si;ri<rows.length;ri++) futureRev+=rows[ri].rev||0;
+      var finalCum=rows[rows.length-1].cum||0;
+      document.getElementById('ss-month').textContent=S.stopMonth;
+      document.getElementById('ss-pool').textContent=stopRow.pool||0;
+      document.getElementById('ss-rev').textContent=ilsS(futureRev);
+      document.getElementById('ss-cum').textContent=ilsS(finalCum);
+      // Color based on positive/negative
+      document.getElementById('ss-cum').style.color=finalCum>=0?'#7B6FE8':'#EF4444';
+    } else {
+      ss.style.display='none';
+    }
+  }
+}
+
+// ─── CHART ────────────────────────────────────────────────────
+function drawChart(rows,bepIdx,mc){
+  var svg=document.getElementById('chart');
+  var W=780,H=190,PL=58,PR=8,PT=8,PB=22;
+  var iW=W-PL-PR,iH=H-PT-PB;
+  var vals=rows.map(function(r){return r.cum;});
+  var minV=Math.min(0,Math.min.apply(null,vals));
+  var maxV=Math.max(0,Math.max.apply(null,vals));
+  var rng=maxV-minV||1;
+  function ty(v){return PT+iH-((v-minV)/rng*iH);}
+  function tx(i){return PL+(i/(rows.length-1))*iW;}
+  var z=ty(0);
+  var path=rows.map(function(r,i){return(i===0?'M':'L')+tx(i).toFixed(1)+','+ty(r.cum).toFixed(1);}).join(' ');
+  var redA=rows.map(function(r,i){return(i===0?'M':'L')+tx(i).toFixed(1)+','+Math.max(ty(r.cum),z).toFixed(1);}).join(' ')+' L'+tx(rows.length-1).toFixed(1)+','+z+' L'+PL+','+z+' Z';
+  var grnA=rows.map(function(r,i){return(i===0?'M':'L')+tx(i).toFixed(1)+','+Math.min(ty(r.cum),z).toFixed(1);}).join(' ')+' L'+tx(rows.length-1).toFixed(1)+','+z+' L'+PL+','+z+' Z';
+  var yL='';
+  [-3,-2,-1,0,1,2,3].forEach(function(k){
+    var v=k>0?maxV*(k/3):minV*(Math.abs(k)/3);
+    if(!isFinite(v))return;
+    yL+='<text x="'+(PL-4)+'" y="'+(ty(v)+3)+'" text-anchor="end" font-size="9" fill="#94a3b8">'+ilsS(v)+'</text>';
+  });
+  var xL='';
+  [0,11,23,35,47,59,71,83,95].forEach(function(i){
+    xL+='<text x="'+tx(i)+'" y="'+(H-5)+'" text-anchor="middle" font-size="9" fill="#94a3b8">'+(i+1)+'</text>';
+  });
+  var bL=bepIdx>=0?'<line x1="'+tx(bepIdx)+'" y1="'+PT+'" x2="'+tx(bepIdx)+'" y2="'+(PT+iH)+'" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/><text x="'+(tx(bepIdx)+4)+'" y="'+(PT+13)+'" font-size="9" fill="#10B981" font-weight="700">BEP</text>':'';
+  svg.innerHTML='<defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#EF4444" stop-opacity="0.28"/><stop offset="100%" stop-color="#EF4444" stop-opacity="0.04"/></linearGradient><linearGradient id="gg" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#10B981" stop-opacity="0.28"/><stop offset="100%" stop-color="#10B981" stop-opacity="0.04"/></linearGradient></defs><line x1="'+PL+'" y1="'+z+'" x2="'+(PL+iW)+'" y2="'+z+'" stroke="#E4E2F5" stroke-width="2"/><path d="'+redA+'" fill="url(#rg)"/><path d="'+grnA+'" fill="url(#gg)"/>'+bL+'<path d="'+path+'" fill="none" stroke="'+mc+'" stroke-width="2.5"/>'+yL+xL;
+}
+
+// ─── TABLE ─────────────────────────────────────────────────────
+function drawTable(rows,bep,bal){
+  if(!rows||!rows.length)return;
+  var n=S.months,mc=MC[S.model];
+  var hasOvh=S.model===1||S.model===4;
+  var hasRef=S.model===1;
+  var vatOn=S.vat;
+  var full=S_fullTable;
+  // colspan לשורת באנר ההפסקה — היה חסר במקור וגרם לקריסה כשמפעילים מודל הפסקה
+  var baseCols=full?(16+(hasRef?1:0)+(hasOvh?1:0)+(vatOn?1:0))
+                   :(9+(hasRef?1:0)+(hasOvh?1:0)+2);
+
+  // Update title with refresh indicator
+  var titleEl=document.getElementById('tb-title');
+  if(titleEl) titleEl.textContent='פירוט חודשי — '+S.months+' חודשים';
+
+  var h;
+  if(!full){
+    // ── COMPACT VIEW (default) ── key columns only
+    h='<thead><tr>'+
+      '<th style="background:#1E1B4B;min-width:36px">חודש</th>'+
+      '<th style="background:#065F46">גבייה<br>הו"ק</th>'+
+      '<th style="background:#065F46">גבייה<br>ח"פ</th>'+
+      '<th style="background:#14532D;font-weight:900">סה"כ<br>הכנסה</th>'+
+      '<th style="background:#7C2D12">עמלה<br>למיליונים</th>'+
+      (hasRef?'<th style="background:#7C2D12">קיזוז<br>ביטול</th>':'')+
+      (hasOvh?'<th style="background:#7C2D12">תקורות</th>':'')+
+      '<th style="background:#7C2D12">מדיה</th>'+
+      '<th style="background:#7F1D1D;font-weight:900">עלויות<br>כוללות</th>'+
+      '<th style="background:#5B21B6;font-weight:900">רווח<br>חודשי</th>'+
+      '<th style="background:#4C1D95;font-weight:900">יתרה<br>מצטברת</th>'+
+      '<th style="background:#1E1B4B">שלב</th>'+
+      '</tr></thead><tbody>';
+    var cols=full?22:9+(hasRef?1:0)+(hasOvh?1:0)+2;
+    for(var i=0;i<Math.min(n,96);i++){
+      var r=rows[i];
+      var isBep=i===bep,isBal=i===bal&&!isBep;
+      var ph=r.prof<0?'r':r.cum<0?'o':'g';
+      var phi=r.prof<0?'🔴':r.cum<0?'🟠':'🟢';
+      if(S.stopMonth>0&&i===S.stopMonth-1)h+='<tr class="m-ms"><td colspan="'+baseCols+'" style="background:#FEF3C7;color:#92400E;border-top:2px dashed #F59E0B;padding:8px 14px">⏸ הפסקת קידום — מחודש '+(i+1)+' אין גיוס חדש. הפול הקיים פוחת טבעית</td></tr>';
+      if(r.isStop)ph+=' stop-row';
+      if(isBep)h+='<tr class="m-ms m-bep"><td colspan="'+(9+(hasRef?1:0)+(hasOvh?1:0)+2)+'" style="color:#7C3AED;border-top:2px solid #7B6FE8;border-bottom:2px solid #7B6FE8">🏆 נקודת האיזון — מחודש '+(bep+1)+' כל שקל הוא רווח טהור לעמותה</td></tr>';
+      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+(9+(hasRef?1:0)+(hasOvh?1:0)+2)+'" style="color:#10B981;border-top:1px solid #86efac">✅ איזון תזרימי — הכנסה = הוצאה חודשית</td></tr>';
+      h+='<tr class="'+ph+(isBep?' m-bep':'')+'">';
+      h+='<td style="font-weight:700;color:'+mc+'">' +r.m+'</td>';
+      h+='<td style="color:var(--grn)">'+ilsS(r.hokRev)+'</td>';
+      h+='<td style="color:var(--yel)">'+ilsS(r.hpRev)+'</td>';
+      h+='<td style="color:var(--grn);font-weight:800;border-right:2px solid #E4E2F5">'+ilsS(r.rev)+'</td>';
+      h+='<td style="color:#5B21B6;font-weight:700">'+ilsS(r.comm)+'</td>';
+      if(hasRef)h+='<td style="color:#F97316;font-size:9px">'+ilsS(r.refund)+'</td>';
+      if(hasOvh)h+='<td style="color:#DC2626">'+ilsS(r.overhead)+'</td>';
+      h+='<td style="color:#64748B;font-size:9px">'+ilsS(r.mediaCost)+'</td>';
+      h+='<td style="color:#7F1D1D;font-weight:700;border-right:2px solid #E4E2F5">'+ilsS(r.totalCost)+'</td>';
+      h+='<td style="font-weight:700;color:'+(r.prof>=0?'var(--grn)':'var(--red)')+'">'+ilsS(r.prof)+'</td>';
+      h+='<td style="font-weight:800;color:'+(r.cum>=0?'#5B21B6':'var(--red)')+'">'+ilsS(r.cum)+'</td>';
+      h+='<td>'+phi+'</td>';
+      h+='</tr>';
+    }
+  } else {
+    // ── FULL DETAIL VIEW ──
+    h='<thead><tr>'+
+      '<th style="background:#1E1B4B">חודש</th>'+
+      '<th style="background:#2D2A6E">לידים</th>'+
+      '<th style="background:#2D2A6E">הו"ק<br>חדש</th>'+
+      '<th style="background:#2D2A6E">ח"פ<br>חדש</th>'+
+      '<th style="background:#4B3F8F">המרות<br>ח"פ→הו"ק</th>'+
+      '<th style="background:#4B3F8F">חידושים<br>שנכנסו</th>'+
+      '<th style="background:#2D2A6E">פול<br>כולל</th>'+
+      '<th style="background:#065F46">גבייה<br>הו"ק</th>'+
+      '<th style="background:#065F46">גבייה<br>ח"פ</th>'+
+      '<th style="background:#065F46">תוספת<br>המרות</th>'+
+      '<th style="background:#065F46">תוספת<br>חידושים</th>'+
+      '<th style="background:#166534">גריעה<br>ביטולים</th>'+
+      '<th style="background:#7F1D1D;font-size:8px">גריעה<br>סיומי</th>'+
+      '<th style="background:#14532D;font-weight:900">סה"כ<br>הכנסה</th>'+
+      '<th style="background:#7C2D12">עמלה<br>כולל מע"מ</th>'+
+      (hasRef?'<th style="background:#7C2D12">קיזוז<br>ביטול</th>':'')+
+      (hasOvh?'<th style="background:#7C2D12">תקורות<br>כולל מע"מ</th>':'')+
+      '<th style="background:#7C2D12">מדיה</th>'+
+      (vatOn?'<th style="background:#7F1D1D">עלויות<br>+מע"מ</th>':'')+
+      '<th style="background:#7F1D1D">עלויות<br>'+(vatOn?'ללא מע"מ':'סה"כ')+'</th>'+
+      '<th style="background:#5B21B6">רווח<br>חודשי</th>'+
+      '<th style="background:#4C1D95;font-weight:900">יתרה<br>מצטברת</th>'+
+      '<th style="background:#1E1B4B">שלב</th>'+
+      '</tr></thead><tbody>';
+    var fcols=16+(hasRef?1:0)+(hasOvh?1:0)+(vatOn?1:0);
+    for(var i=0;i<Math.min(n,96);i++){
+      var r=rows[i];
+      var isBep=i===bep,isBal=i===bal&&!isBep;
+      var ph=r.prof<0?'r':r.cum<0?'o':'g';
+      var phi=r.prof<0?'🔴':r.cum<0?'🟠':'🟢';
+      if(S.stopMonth>0&&i===S.stopMonth-1)h+='<tr class="m-ms"><td colspan="'+baseCols+'" style="background:#FEF3C7;color:#92400E;border-top:2px dashed #F59E0B;padding:8px 14px">⏸ הפסקת קידום — מחודש '+(i+1)+' אין גיוס חדש. הפול הקיים פוחת טבעית</td></tr>';
+      if(r.isStop)ph+=' stop-row';
+      if(isBep)h+='<tr class="m-ms m-bep"><td colspan="'+fcols+'" style="color:#7C3AED;border-top:2px solid #7B6FE8;border-bottom:2px solid #7B6FE8">🏆 נקודת האיזון — מחודש '+(bep+1)+'</td></tr>';
+      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+fcols+'" style="color:#10B981;border-top:1px solid #86efac">✅ איזון תזרימי</td></tr>';
+      h+='<tr class="'+ph+(isBep?' m-bep':'')+'">';
+      h+='<td style="font-weight:700;color:'+mc+'">'+r.m+'</td>';
+      h+='<td style="font-size:9px">'+nl(r.leads)+'</td>';
+      h+='<td style="color:var(--teal)">'+nl(r.nHok)+'</td>';
+      h+='<td style="color:var(--yel)">'+nl(r.nHp)+'</td>';
+      h+='<td style="color:#7C3AED">'+nl(r.converted)+'</td>';
+      h+='<td style="color:#10B981">'+nl(r.renewEntered||0)+'</td>';
+      h+='<td style="font-weight:600">'+nl(r.pool)+'</td>';
+      h+='<td style="color:var(--grn)">'+ilsS(r.hokRev)+'</td>';
+      h+='<td style="color:var(--yel)">'+ilsS(r.hpRev)+'</td>';
+      h+='<td style="color:#7C3AED;font-size:9px">'+ilsS(r.convClearing||0)+'</td>';
+      h+='<td style="color:#10B981;font-size:9px">'+ilsS(r.renewClearing||0)+'</td>';
+      h+='<td style="color:#EF4444;font-size:9px">'+ilsS(r.cancClearing||0)+'</td>';
+    h+='<td style="color:#DC2626;font-size:9px">'+ilsS(r.exitClearing||0)+'</td>';
+      h+='<td style="color:var(--grn);font-weight:800;border-right:2px solid #E4E2F5">'+ilsS(r.rev)+'</td>';
+      h+='<td style="color:#5B21B6;font-weight:700">'+ilsS(r.comm)+'</td>';
+      if(hasRef)h+='<td style="color:#F97316;font-size:9px">'+ilsS(r.refund)+'</td>';
+      if(hasOvh)h+='<td style="color:#DC2626">'+ilsS(r.overhead)+'</td>';
+      h+='<td style="color:#64748B;font-size:9px">'+ilsS(r.mediaCost)+'</td>';
+      if(vatOn)h+='<td style="color:#7F1D1D;font-weight:700">'+ilsS(r.totalCost)+'</td>';
+      h+='<td style="color:#DC2626">'+ilsS(r.totalCostNoVat||0)+'</td>';
+      h+='<td style="font-weight:700;color:'+(r.prof>=0?'var(--grn)':'var(--red)')+'">'+ilsS(r.prof)+'</td>';
+      h+='<td style="font-weight:800;color:'+(r.cum>=0?'#5B21B6':'var(--red)')+'">'+ilsS(r.cum)+'</td>';
+      h+='<td>'+phi+'</td>';
+      h+='</tr>';
+    }
+  }
+  document.getElementById('tbl').innerHTML=h+'</tbody>';
+}
+
+// ─── PANEL BUILDERS ────────────────────────────────────────────
+function slW(id,label,v,min,max,step,fmt,color,hint,calc){
+  var mn='<button class="stp-btn stp-m" data-s="'+id+'" data-t="'+step+'" data-n="'+min+'" data-x="'+max+'" onpointerdown="stpPD(event,-1)">&#8722;</button>';
+  var pl='<button class="stp-btn stp-p" data-s="'+id+'" data-t="'+step+'" data-n="'+min+'" data-x="'+max+'" onpointerdown="stpPD(event,1)">&#43;</button>';
+  var attrs='id="sv-'+id+'" style="color:'+color+'"';
+  attrs+=' onfocus="stpFocus(this,\''+id+'\')"';
+  attrs+=' onchange="stpChg(this,\''+id+'\','+min+','+max+')"';
+  attrs+=' onkeydown="if(event.key===\'Enter\')this.blur()"';
+  var inp='<input class="stp-inp" type="text" value="'+fmt(v)+'" '+attrs+'>';
+  return '<div class="stp">'+
+    '<div class="stp-lbl">'+label+'</div>'+
+    (hint?'<span class="stp-hint">'+hint+'</span>':'')+
+    '<div class="stp-row">'+mn+inp+pl+'</div>'+
+    (calc?'<div class="stp-calc" id="sc-'+id+'">'+calc+'</div>':'')+
+    '</div>';
+}
+function niW(id,label,v,unit,min,max,step,hint){
+  return '<div class="ni"><div><div class="ni-l">'+label+'</div>'+
+    (hint?'<div class="ni-h">'+hint+'</div>':'')+
+    '</div><div class="ni-r"><span class="ni-u">'+unit+'</span>'+
+    '<input type="number" id="ni-'+id+'" value="'+v+'" min="'+min+'" max="'+max+
+    '" step="'+step+'" onchange="niCh(\''+id+'\',+this.value)"></div></div>';
+}
+function tgW(id,label,on){
+  return '<div class="tg"><div class="tg-l">'+label+'</div>'+
+    '<div class="tg-s '+(on?'on':'off')+'" id="tg-'+id+'" onclick="tgCh(\''+id+'\')">'+
+    '<div class="tg-d"></div></div></div>';
+}
+function secW(id,icon,title,content,open,color){
+  return '<div><button class="sec-h" style="background:'+(color||'rgba(123,111,232,0.18)')+
+    '" onclick="secTg(\''+id+'\')"><span>'+icon+' '+title+'</span>'+
+    '<span id="sa-'+id+'">'+(open?'▲':'▼')+'</span></button>'+
+    '<div id="sb-s-'+id+'" style="display:'+(open?'block':'none')+'" class="sec-b">'+
+    content+'</div></div>';
+}
+function tiersW(mn){
+  var t=S.m[mn].tiers,hokM=S.m[mn].hokMax||18;
+  var h='<div style="font-size:9px;color:rgba(255,255,255,0.4);margin-bottom:6px;line-height:1.4">'+
+    'מדרגות לפי חודש חיי התרומה (1–'+hokM+'). מחוץ לטווח = 0% ביטול.</div>'+
+    '<div class="tg-grid"><div class="tg-head">מחודש</div><div class="tg-head">עד חודש</div>'+
+    '<div class="tg-head">ביטול %</div><div class="tg-head"></div>';
+  for(var i=0;i<t.length;i++){
+    h+='<input type="number" value="'+t[i].f+'" min="1" max="'+hokM+'" onchange="trCh('+mn+','+i+',\'f\',+this.value)">'+
+      '<input type="number" value="'+t[i].t+'" min="1" max="'+hokM+'" onchange="trCh('+mn+','+i+',\'t\',+this.value)">'+
+      '<input type="number" class="tr-rate" value="'+((t[i].r||0)*100).toFixed(1)+
+      '" min="0" max="50" step="0.5" onchange="trCh('+mn+','+i+',\'r\',+this.value)">'+
+      '<button class="tr-rm" onclick="trRm('+mn+','+i+')">✕</button>';
+  }
+  h+='</div>';
+  if(!t.length)h+='<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.3);padding:8px;border:1px dashed rgba(255,255,255,0.1);border-radius:8px;margin-bottom:6px">ריק = 0% ביטולים</div>';
+  if(t.length<10)h+='<button class="add-tr" onclick="trAdd('+mn+')">+ הוסף מדרגה</button>';
+  return h;
+}
+
+function renderPanel(){
+  var tab=S.tab,mn=S.model,mc=S.m[mn];
+  var leads=Math.floor(S.media/S.cpl),p='';
+
+  if(tab==='shared'){
+    var sc=S.scenario,scCol=sc>0?'#10B981':sc<0?'#EF4444':'#7B6FE8';
+    p='<div id="scen-box"><div style="color:var(--purL);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🎛 תרחיש כולל</div>'+
+      slW('sc',sc===0?'0% — בסיס':sc>0?'+'+sc+'% אופטימי':sc+'% פסימי',
+          sc,-100,100,1,function(v){return v===0?'0%':v>0?'+'+v+'%':v+'%';},scCol,
+          'מינוס=פסימי | פלוס=אופטימי | 0=בסיס',null)+
+      (sc!==0?'<button onclick="slCh(\'sc\',0);renderAll();" style="width:100%;padding:5px;border-radius:6px;border:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);cursor:pointer;font-size:10px;font-family:inherit">↩ חזור לבסיס</button>':'')+'</div>';
+
+    p+=secW('sm','📢','מדיה וגיוס',
+      slW('media','תקציב דיגיטל חודשי',S.media,5000,150000,1000,ilsS,'#64748B',null,'→ '+nl(leads)+' לידים/חודש')+
+      slW('cpl','עלות ליד (CPL)',S.cpl,20,400,5,function(v){return'₪'+v;},'#F97316','ממוצע שוק: ₪60–₪120','→ '+nl(leads)+' לידים')+
+      slW('conv','יחס המרה לעסקה',S.conv,0.05,0.70,0.01,pct,'#10B981','% מהלידים שנסגרים','→ '+nl(Math.round(leads*S.conv))+' עסקאות/חודש')+
+      slW('hokPct','אחוז הו"ק מהעסקאות',S.hokPct,0.10,0.95,0.05,pct,'#7C3AED',null,
+          '→ '+nl(Math.round(leads*S.conv*S.hokPct))+' הו"ק + '+nl(Math.round(leads*S.conv*(1-S.hokPct)))+' ח"פ')
+      ,true,'rgba(123,111,232,0.2)');
+
+    p+=secW('sa','👥','ממוצעי תרומה',
+      slW('avgHok','ממוצע פעימת הו"ק',S.avgHok,50,800,10,function(v){return'₪'+v;},'#0891B2','₪ שכל תורם משלם בחודש',null)+
+      slW('avgHp','ממוצע תרומת ח"פ',S.avgHp,50,2000,50,function(v){return'₪'+v;},'#F59E0B','ממוצע תרומה חד פעמית',null)+
+      slW('susp','אחוז השהיה (תקועים)',S.susp,0,0.20,0.005,pct,'#0891B2','% מהפול שגבייתם נכשלה',null)
+      ,true,'rgba(16,185,129,0.14)');
+
+    p+=secW('sc2','🔄','חידושים והמרות',
+      slW('hpConvRate','המרת ח"פ להו"ק (חודש הבא)',S.hpConvRate,0,0.80,0.01,pct,'#7C3AED',
+          '% מתורמי ח"פ שהופכים הו"ק בחודש הבא',null)+
+      slW('renewRate','חידושים בסיום תרומה',S.renewRate,0,1.00,0.01,pct,'#10B981',
+          '% שמחדשים ב-18/36 חודשים ללא עלות מדיה',null)
+      ,true,'rgba(16,185,129,0.14)');
+
+    p+=secW('sv','📋','מע"מ',
+      tgW('vat','כלול מע"מ על תשלומים למיליונים',S.vat)+
+      (S.vat?slW('vatR','שיעור מע"מ',S.vatR,0.10,0.25,0.01,pct,'#F59E0B',null,null):'')
+      ,false,'rgba(245,158,11,0.12)');
+  }
+  else if(tab==='model'){
+    var col=MC[mn];
+    p='<div style="background:'+col+'20;border-radius:10px;padding:9px 11px;margin-bottom:11px;border:1px solid '+col+'44"><div style="color:#fff;font-weight:700;font-size:11px">'+MN[mn]+'</div></div>';
+    var commSlider=slW('comm','עמלת מיליונים %',mc.comm,0.05,0.40,0.005,pct,col,null,null);
+    var hokMaxSlider=mn!==3?slW('hokMax','חודשי הו"ק (מחזור תרומה)',(mc.hokMax||18),6,mn===4?60:48,6,function(v){return v+'M';},col,null,'שווי תורם שלם: ₪'+nl((mc.hokMax||18)*S.avgHok)):'';
+    var extra1=mn===1?'':mn===2?slW('preDed','ניכוי מוסכם מראש %',mc.preDed||0.035,0.01,0.50,0.005,pct,'#F97316','מנוכה מגיוס ברוטו לפני עמלה',null):'';
+    p+=secW('sc'+mn,'💰','עמלה ומשך',commSlider+hokMaxSlider+extra1,true,col+'22');
+
+    var note1=mn===1?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ עמלה על גיוס חדש | ✓ קיזוז על ביטולים (חודש הבא) | ✓ עמלה על חידושים</div>':'';
+    var note2=mn===2?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ ביטולים משפיעים על גבייה בלבד | לא על העמלה | ✓ עמלה על חידושים</div>':'';
+    var note34=mn>=3?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ ביטול = פול קטן = גבייה נמוכה = עמלה נמוכה | ✓ חידושים מגדילים פול</div>':'';
+    p+=secW('tr'+mn,'🔴','מדרגות ביטול (לפי חודש חיי תרומה)',note1+note2+note34+tiersW(mn),true,'rgba(239,68,68,0.14)');
+
+    var ovh='';
+    if(mn===1||mn===4){
+      ovh='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">';
+      [['mH','שעות ניהול/חודש','ש',1,200,1],['mR','תעריף ניהול','₪',50,1000,10],
+       ['fH','שעות גיוס/חודש','ש',1,200,1],['fR','תעריף גיוס','₪',50,1000,10]].forEach(function(a){
+        ovh+='<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:8px">'+
+          '<div style="font-size:9px;color:rgba(255,255,255,0.45);margin-bottom:4px">'+a[1]+'</div>'+
+          '<div style="display:flex;align-items:center;gap:4px">'+
+          '<span style="font-size:9px;color:rgba(255,255,255,0.3)">'+a[2]+'</span>'+
+          '<input type="number" value="'+mc[a[0]]+'" min="'+a[3]+'" max="'+a[4]+'" step="'+a[5]+
+          '" onchange="mkCh('+mn+',\''+a[0]+'\',+this.value)" style="flex:1;padding:4px 6px;border-radius:5px;border:1px solid '+col+'44;background:'+col+'18;color:#fff;font-size:12px;font-weight:700;text-align:center;outline:none;font-family:inherit;-moz-appearance:textfield">'+
+          '</div></div>';
+      });
+      ovh+='</div>';
+      ovh+=niW('ret'+mn,'ריטיינר חודשי',mc.ret||8000,'₪',0,50000,500,null);
+      ovh+=niW('dig'+mn,'ניהול דיגיטל',mc.dig||4500,'₪',0,30000,500,null);
+    }
+    ovh+=niW('sw'+mn,'תוכנה/חודש',mc.sw||1200,'₪',0,10000,100,null);
+    ovh+=niW('prod'+mn,'הפקה/רבעון',mc.prod||5000,'₪',0,50000,500,null);
+    ovh+=niW('grow'+mn,'עלייה שנתית %',mc.grow||3,'%',0,15,0.5,'אינפלציה שנתית על עלויות');
+    p+=secW('ov'+mn,'⚙','עלויות',ovh,false,col+'18');
+  }
+  else if(tab==='media'){
+    // ── Media overrides: clean list UI ──
+    p='<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:9px 11px;margin-bottom:12px">'+
+      '<div style="font-size:10px;color:rgba(255,255,255,0.7);font-weight:700">תקציב בסיס: ₪'+nl(S.media)+'/חודש</div>'+
+      '<div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:3px">שנה בלשונית "משותף" → מדיה</div></div>';
+
+    p+='<div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:10px;line-height:1.5">'+
+      '💡 הוסף עקיפה לחודש ספציפי. הגבייה, העמלה ורווח העמותה יחושבו בהתאם.</div>';
+
+    if(S.ovList.length===0){
+      p+='<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.3);padding:16px;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;margin-bottom:10px">אין עקיפות — כל החודשים = תקציב בסיס</div>';
+    } else {
+      p+='<div class="ov-list">';
+      for(var i=0;i<S.ovList.length;i++){
+        var ov=S.ovList[i];
+        p+='<div class="ov-item">'+
+          '<span style="color:rgba(255,255,255,0.6);font-size:10px;white-space:nowrap">חודש</span>'+
+          '<input type="number" value="'+ov.m+'" min="1" max="96" step="1" '+
+          'onchange="ovCh('+i+',\'m\',+this.value)" style="max-width:60px">'+
+          '<span style="color:rgba(255,255,255,0.6);font-size:10px;white-space:nowrap">₪</span>'+
+          '<input type="number" value="'+ov.amt+'" min="0" step="1000" '+
+          'onchange="ovCh('+i+',\'amt\',+this.value)">'+
+          '<button class="ov-rm" onclick="ovRm('+i+')">✕</button></div>';
+      }
+      p+='</div>';
+    }
+    p+='<button class="add-ov" onclick="ovAdd()">+ הוסף עקיפה לחודש ספציפי</button>';
+    p+='<div style="margin-top:10px;padding:7px 10px;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid rgba(245,158,11,0.2)">'+
+      '<div style="font-size:9px;color:var(--yel)">📊 הסדר אינו חשוב. ניתן להוסיף כמה חודשים שצריך.</div></div>';
+  }
+  else{
+    // ── STOP MONTH UI ──────────────────────────────────────
+    var _stpOn=S.stopMonth>0;
+    p='<div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:13px;margin-bottom:14px">';
+    p+='<div style="font-size:12px;font-weight:800;color:#FCD34D;margin-bottom:6px">⏸ הפסקת קידום ממומן</div>';
+    p+='<div style="font-size:9px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:10px">';
+    p+='📌 מסלול 1: עמלה נפסקת ✓ | תקורות (שכר/ריטיינר) ממשיכות<br>';
+    p+='📌 מסלול 2: עמלה נפסקת ✓ | אין תקורות ← כל הסליקה לעמותה<br>';
+    p+='📌 מסלולים 3+4: עמלה על סליקה ממשיכה (% מהפול הפוחת)</div>';
+    p+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(_stpOn?'10':'0')+'px">';
+    p+='<span style="font-size:11px;color:#fff;font-weight:700">הפעל מודל הפסקה</span>';
+    p+='<div class="tg-s '+(_stpOn?'on':'off')+'" onclick="S.stopMonth=S.stopMonth>0?0:24;renderAll()"><div class="tg-d"></div></div>';
+    p+='</div>';
+    if(_stpOn){
+      p+=slW('stopMonth','חודש הפסקת קידום',S.stopMonth,1,96,1,
+        function(v){return 'חודש '+v;},'#FCD34D','','→ מחודש זה: אין לידים, מדיה=₪0, הפול פוחת');
+    }
+    p+='</div>';
+    p+='<div style="color:rgba(255,255,255,0.5);font-size:10px;margin-bottom:12px;line-height:1.6">הוצאות נוספות מתווספות לעלויות ומשפיעות על נקודת האיזון.</div>';
+    for(var ei=0;ei<S.ex.length;ei++){
+      var e=S.ex[ei];
+      p+='<div class="ex'+(e.on?' on':'')+'"><div class="ex-h">'+
+        '<input class="ex-d" value="'+(e.lb||'')+'" placeholder="תיאור..." onchange="exCh('+ei+',\'lb\',this.value)">'+
+        '<div style="display:flex;gap:8px;align-items:center">'+
+        '<div class="tg-s '+(e.on?'on':'off')+'" onclick="exTg('+ei+')"><div class="tg-d"></div></div>'+
+        '<button class="ex-rm" onclick="exRm('+ei+')">✕</button></div></div>';
+      if(e.on){
+        p+='<div class="ex-g">'+
+          '<div class="ex-f"><label>סכום ₪</label><input type="number" value="'+(e.amt||'')+'" min="0" step="100" onchange="exCh('+ei+',\'amt\',+this.value)"></div>'+
+          '<div class="ex-f"><label>תדירות</label><select onchange="exCh('+ei+',\'fr\',this.value)">'+
+          '<option value="M"'+(e.fr==='M'?' selected':'')+'>חודשי</option>'+
+          '<option value="Q"'+(e.fr==='Q'?' selected':'')+'>רבעוני</option>'+
+          '<option value="O"'+(e.fr==='O'?' selected':'')+'>חד פעמי</option></select></div>'+
+          '<div class="ex-f"><label>מחודש</label><input type="number" value="'+(e.f||1)+'" min="1" max="96" onchange="exCh('+ei+',\'f\',+this.value)"></div>'+
+          '<div class="ex-f"><label>עד חודש</label><input type="number" value="'+(e.t||96)+'" min="1" max="96" onchange="exCh('+ei+',\'t\',+this.value)"></div>'+
+          '<div class="ex-f" style="grid-column:span 2">'+tgW('ev'+ei,'כולל מע"מ',e.iv)+'</div></div>';
+      }
+      p+='</div>';
+    }
+    if(S.ex.length<10)p+='<button onclick="exAdd()" style="width:100%;padding:9px;border-radius:8px;border:1px dashed rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:11px;font-family:inherit">+ הוסף הוצאה נוספת</button>';
+  }
+
+  document.getElementById('panel').innerHTML=p;
+}
+
+// ─── ALL CONTROLS ──────────────────────────────────────────────
+function renderAll(){
+  try{renderPanel();}catch(ep){console.error('Panel:',ep.message);}
+  try{renderResults();}catch(er){console.error('Results:',er.message);}
+}
+
+var SL_MAP={
+  sc:'scenario',media:'media',cpl:'cpl',conv:'conv',hokPct:'hokPct',
+  avgHok:'avgHok',avgHp:'avgHp',susp:'susp',vatR:'vatR',
+  hpConvRate:'hpConvRate',renewRate:'renewRate'
+};
+function slCh(id,v){
+  if(SL_MAP[id]!==undefined){S[SL_MAP[id]]=v;}
+  else if(id==='comm')S.m[S.model].comm=v;
+  else if(id==='hokMax')S.m[S.model].hokMax=v;
+  else if(id==='preDed')S.m[S.model].preDed=v;
+  renderAll();
+}
+function niCh(id,v){
+  var mn=parseInt(id.match(/\d+/));
+  if(id.startsWith('ret'))S.m[mn].ret=v;
+  else if(id.startsWith('dig'))S.m[mn].dig=v;
+  else if(id.startsWith('sw'))S.m[mn].sw=v;
+  else if(id.startsWith('prod'))S.m[mn].prod=v;
+  else if(id.startsWith('grow'))S.m[mn].grow=v;
+  renderResults();
+}
+function mkCh(mn,k,v){S.m[mn][k]=v;renderResults();}
+function trCh(mn,i,k,v){S.m[mn].tiers[i][k]=(k==='r'?v/100:v);renderResults();}
+function trRm(mn,i){S.m[mn].tiers.splice(i,1);renderAll();}
+function trAdd(mn){S.m[mn].tiers.push({f:1,t:S.m[mn].hokMax||18,r:0.035});renderAll();}
+function tgCh(id){if(id==='vat'){S.vat=!S.vat;renderAll();}}
+function ovAdd(){S.ovList.push({m:1,amt:S.media});renderAll();}
+function ovRm(i){S.ovList.splice(i,1);renderAll();}
+function ovCh(i,k,v){S.ovList[i][k]=v;renderResults();}
+function exAdd(){S.ex.push({lb:'',amt:0,fr:'M',f:1,t:96,iv:true,on:true});renderAll();}
+function exRm(i){S.ex.splice(i,1);renderAll();}
+function exTg(i){S.ex[i].on=!S.ex[i].on;renderAll();}
+function exCh(i,k,v){S.ex[i][k]=v;renderResults();}
+function secTg(id){
+  var b=document.getElementById('sb-s-'+id),a=document.getElementById('sa-'+id);
+  if(!b)return;var op=b.style.display==='none';
+  b.style.display=op?'block':'none';if(a)a.textContent=op?'▲':'▼';
+}
+function setModel(mn){
+  S.model=mn;
+  document.querySelectorAll('.mb').forEach(function(b){
+    b.classList.toggle('on',+b.getAttribute('onclick').match(/\d+/)[0]===mn);
+  });
+  renderAll();
+}
+function setTab(t){
+  S.tab=t;
+  document.querySelectorAll('.lt').forEach(function(b){
+    b.classList.toggle('on',b.getAttribute('onclick').includes("'"+t+"'"));
+  });
+  renderPanel();
+}
+var S_fullTable = false;
+function toggleFullTable(){
+  S_fullTable = !S_fullTable;
+  var btn = document.getElementById('tbl-full-btn');
+  if(btn) btn.textContent = S_fullTable ? 'תצוגה בסיסית' : 'פירוט מלא';
+  if(btn) btn.classList.toggle('on', S_fullTable);
+  drawTable(DATA, DATA.findIndex(function(r){return r.cum>=0;}),
+             DATA.findIndex(function(r){return r.prof>=0;}));
+}
+function setMonths(n){
+  S.months=n;
+  document.querySelectorAll('.mbt-m').forEach(function(b){
+    b.classList.toggle('on',+b.dataset.m===+n);
+  });
+  renderResults();
+}
+function mSwitch(v){
+  var sb=document.getElementById('sidebar'),mn=document.getElementById('main');
+  var bi=document.getElementById('bn-in'),bo=document.getElementById('bn-out');
+  if(v==='in'){sb.style.display='flex';mn.style.display='none';bi.classList.add('on');bo.classList.remove('on');}
+  else{sb.style.display='none';mn.style.display='block';bo.classList.add('on');bi.classList.remove('on');renderAll();}
+}
+
+document.addEventListener('click',function(e){
+  var t=e.target;while(t&&t!==document){
+    if(t.id&&t.id.indexOf('tg-ev')===0){
+      var i=parseInt(t.id.replace('tg-ev',''));exCh(i,'iv',!S.ex[i].iv);renderAll();return;
+    }
+    t=t.parentNode;
+  }
+});
+
+// ─── SHARE + PERSISTENCE ───────────────────────────────────────
+// קידוד/פענוח בטוח ל-UTF-8 (תוויות בעברית) ל-base64
+function _enc(obj){return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));}
+function _dec(str){return JSON.parse(decodeURIComponent(escape(atob(str))));}
+
+// מיזוג state נטען לתוך S מבלי לאבד מבנה ברירת מחדל
+function applyState(o){
+  if(!o||typeof o!=='object')return;
+  ['model','scenario','tab','months','media','cpl','conv','hokPct','avgHok',
+   'avgHp','susp','vat','vatR','hpConvRate','renewRate','stopMonth'].forEach(function(k){
+    if(o[k]!==undefined)S[k]=o[k];
+  });
+  if(o.m&&typeof o.m==='object'){for(var k in o.m){if(S.m[k])for(var f in o.m[k])S.m[k][f]=o.m[k][f];}}
+  if(Array.isArray(o.ovList))S.ovList=o.ovList;
+  if(Array.isArray(o.ex))S.ex=o.ex;
+}
+
+var LS_KEY='milyonims360.v34';
+function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+
+function loadInitialState(){
+  // 1) עדיפות ל-state בכתובת (#s=...) — קישור משותף
+  try{
+    var h=location.hash||'';
+    var m=h.match(/[#&]s=([^&]+)/);
+    if(m&&m[1]){applyState(_dec(decodeURIComponent(m[1])));return 'url';}
+  }catch(e){console.warn('share load failed',e);}
+  // 2) אחרת — שחזור מ-localStorage
+  try{
+    var raw=localStorage.getItem(LS_KEY);
+    if(raw){applyState(JSON.parse(raw));return 'local';}
+  }catch(e){}
+  return 'default';
+}
+
+function showShareToast(){
+  var t=document.getElementById('share-toast');
+  if(!t)return;
+  t.style.display='block';
+  clearTimeout(window._shTo);
+  window._shTo=setTimeout(function(){t.style.display='none';},2600);
+}
+function _fallbackCopy(url){
+  try{
+    var ta=document.createElement('textarea');
+    ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.focus();ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    showShareToast();
+  }catch(e){prompt('העתק את הקישור:',url);}
+}
+function shareUrl(){
+  try{
+    var enc=_enc(S);
+    var url=location.origin+location.pathname+'#s='+enc;
+    try{history.replaceState(null,'','#s='+enc);}catch(e){}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(showShareToast,function(){_fallbackCopy(url);});
+    } else {_fallbackCopy(url);}
+  }catch(e){alert('שגיאה ביצירת קישור: '+e.message);}
+}
+
+// שמירה אוטומטית בכל רינדור
+var _renderAll_orig=renderAll;
+renderAll=function(){_renderAll_orig();persist();};
+
+// ─── INIT ──────────────────────────────────────────────────────
+window.onerror=function(msg,src,line,col,err){
+  document.body.innerHTML='<div style="padding:30px;font-family:Arial;direction:rtl;color:#7F1D1D;background:#FEE2E2;border-radius:12px;margin:20px"><h2>שגיאה</h2><p>'+msg+'</p><small>שורה '+line+'</small></div>';
+  return true;
+};
+try{
+  loadInitialState();
+  // סנכרון מצב כפתורי מסלול/לשונית לפי ה-state שנטען
+  document.querySelectorAll('.mb').forEach(function(b){
+    b.classList.toggle('on',+b.getAttribute('onclick').match(/\d+/)[0]===S.model);
+  });
+  document.querySelectorAll('.lt').forEach(function(b){
+    b.classList.toggle('on',b.getAttribute('onclick').includes("'"+S.tab+"'"));
+  });
+  document.querySelectorAll('.mbt-m').forEach(function(b){
+    b.classList.toggle('on',+b.dataset.m===+S.months);
+  });
+  renderAll();
+}catch(e){
+  document.body.innerHTML='<div style="padding:30px;font-family:Arial;direction:rtl;color:#7F1D1D;background:#FEE2E2;border-radius:12px;margin:20px"><h2>שגיאה בטעינה</h2><p>'+e.message+'</p></div>';
+}
+</script>
+
+<div id="share-toast"
+  style="display:none;position:fixed;bottom:120px;left:50%;
+    transform:translateX(-50%);background:#10B981;color:#fff;
+    padding:10px 24px;border-radius:14px;font-size:12px;
+    font-weight:800;z-index:9999;box-shadow:0 4px 24px rgba(0,0,0,0.25);
+    font-family:inherit">
+  ✓ קישור הועתק! שלח ללקוח
+</div>
+
+
+<!-- Share button -->
+<button onclick="shareUrl()" id="share-btn"
+  style="position:fixed;top:12px;left:12px;z-index:9000;
+    padding:9px 15px;border-radius:12px;border:none;
+    background:linear-gradient(135deg,#6C63F0,#5B21B6);
+    color:#fff;font-size:11px;font-weight:800;font-family:inherit;
+    cursor:pointer;box-shadow:0 4px 16px rgba(108,99,240,0.5);
+    display:flex;align-items:center;gap:5px">🔗 שתף</button>
+
+</body>
+</html>
