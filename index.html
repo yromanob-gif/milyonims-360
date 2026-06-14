@@ -8,15 +8,16 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --nav:#1E1B4B;--pur:#6C63F0;--purL:#C4BAF5;--pale:#EAE8FF;
-  --bg:#F0EFFF;--card:#fff;--border:#E4E2F5;--text:#1E1B4B;--sub:#64748B;
+  --bg:#F7F7FE;--card:#fff;--border:#ECEAF9;--text:#1E1B4B;--sub:#64748B;
   --grn:#10B981;--grnL:#D1FAE5;--red:#EF4444;--redL:#FEE2E2;
   --yel:#F59E0B;--yelL:#FEF3C7;--org:#F97316;--teal:#0891B2;
 }
-body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);
+body{font-family:"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#FCFBFF 0%,#F2F1FD 100%);color:var(--text);
   height:100dvh;overflow:hidden;display:flex;flex-direction:column}
 #app{display:flex;flex:1;overflow:hidden;min-height:0}
 /* SIDEBAR */
-#sidebar{width:340px;min-width:300px;background:linear-gradient(170deg,#1A1535 0%,#231E52 60%,#1A1535 100%);
+#sidebar{width:340px;min-width:300px;background:linear-gradient(168deg,#3B309C 0%,#5346C0 60%,#42379E 100%);
   display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
 #logo{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.08);
   display:flex;align-items:center;gap:10px;flex-shrink:0}
@@ -259,12 +260,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height
 <body>
 <div id="app">
   <aside id="sidebar">
-    <div id="logo">
-      <div class="li">מ</div>
-      <div>
-        <div class="ln">מיליונים 360</div>
-        <div class="ls">סימולציה אינטראקטיבית</div>
-        <div class="lv">v34</div>
+    <div id="logo" style="flex-direction:column;align-items:flex-start;gap:7px">
+      <svg width="184" height="38" viewBox="0 0 184 38" xmlns="http://www.w3.org/2000/svg" style="display:block">
+        <defs>
+          <linearGradient id="psg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8E80F2"/>
+            <stop offset="1" stop-color="#22D3EE"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="2" width="34" height="34" rx="10" fill="url(#psg)"/>
+        <text x="17" y="25" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="900" fill="#fff">PS</text>
+        <text x="44" y="17" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#fff">Public</text>
+        <text x="44" y="31" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2.5" fill="#CFC7F7">SOLUTIONS</text>
+      </svg>
+      <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
+        <span class="ln">מיליונים 360</span>
+        <span class="ls">סימולציה אינטראקטיבית</span>
+        <span class="lv">v34</span>
       </div>
     </div>
     <div id="mtabs">
@@ -1272,7 +1284,7 @@ try{
 <button onclick="shareUrl()" id="share-btn"
   style="position:fixed;top:12px;left:12px;z-index:9000;
     padding:9px 15px;border-radius:12px;border:none;
-    background:linear-gradient(135deg,#6C63F0,#5B21B6);
+    background:linear-gradient(135deg,#7C6FF5,#9F7AEA);
     color:#fff;font-size:11px;font-weight:800;font-family:inherit;
     cursor:pointer;box-shadow:0 4px 16px rgba(108,99,240,0.5);
     display:flex;align-items:center;gap:5px">🔗 שתף</button>
