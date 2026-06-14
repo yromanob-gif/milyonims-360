@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>מיליונים 360 — v34</title>
+<title>מיליונים 360 — v35</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -12,34 +15,34 @@
   --grn:#10B981;--grnL:#D1FAE5;--red:#EF4444;--redL:#FEE2E2;
   --yel:#F59E0B;--yelL:#FEF3C7;--org:#F97316;--teal:#0891B2;
 }
-body{font-family:"Segoe UI",Arial,sans-serif;
+body{font-family:'Assistant','Segoe UI',Arial,sans-serif;
   background:linear-gradient(180deg,#FCFBFF 0%,#F2F1FD 100%);color:var(--text);
   height:100dvh;overflow:hidden;display:flex;flex-direction:column}
 #app{display:flex;flex:1;overflow:hidden;min-height:0}
 /* SIDEBAR */
-#sidebar{width:340px;min-width:300px;background:linear-gradient(168deg,#3B309C 0%,#5346C0 60%,#42379E 100%);
+#sidebar{width:340px;min-width:300px;background:#FFFFFF;border-left:1px solid #ECEAF9;
   display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
-#logo{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.08);
+#logo{padding:13px 16px;border-bottom:1px solid rgba(30,27,75,0.08);
   display:flex;align-items:center;gap:10px;flex-shrink:0}
 .li{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7B6FE8,#C4BAF5);
   display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;
-  color:#fff;flex-shrink:0}
-.ln{color:#fff;font-weight:900;font-size:13px}
-.ls{color:rgba(255,255,255,0.38);font-size:9px;margin-top:1px}
+  color:#1E1B4B;flex-shrink:0}
+.ln{color:#1E1B4B;font-weight:900;font-size:13px}
+.ls{color:rgba(30,27,75,0.38);font-size:9px;margin-top:1px}
 .lv{color:#7B6FE8;font-size:8px;font-weight:700;margin-top:1px}
-#mtabs{padding:10px 13px 6px;border-bottom:1px solid rgba(255,255,255,0.08);
+#mtabs{padding:10px 13px 6px;border-bottom:1px solid rgba(30,27,75,0.08);
   display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0}
-.mb{padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.07);color:#fff;text-align:right;cursor:pointer;
+.mb{padding:8px;border-radius:10px;border:1px solid rgba(30,27,75,0.1);
+  background:rgba(30,27,75,0.07);color:#1E1B4B;text-align:right;cursor:pointer;
   transition:all .2s;font-family:inherit}
 .mb.on{border-color:var(--pur);background:rgba(123,111,232,0.3)}
-.mb .mn{font-weight:700;font-size:11px}.mb .ms{color:rgba(255,255,255,0.4);font-size:9px;margin-top:1px}
+.mb .mn{font-weight:700;font-size:11px}.mb .ms{color:rgba(30,27,75,0.4);font-size:9px;margin-top:1px}
 #ltabs{display:flex;padding:7px 13px 0;gap:3px;flex-shrink:0}
 .lt{flex:1;padding:6px 2px;border-radius:7px 7px 0 0;border:none;
-  background:transparent;color:rgba(255,255,255,0.38);font-size:9px;font-weight:700;
+  background:transparent;color:rgba(30,27,75,0.38);font-size:9px;font-weight:700;
   display:flex;flex-direction:column;align-items:center;gap:1px;
   border-bottom:2px solid transparent;cursor:pointer;font-family:inherit}
-.lt.on{color:#fff;background:rgba(255,255,255,0.1);border-bottom-color:var(--pur)}
+.lt.on{color:#1E1B4B;background:rgba(30,27,75,0.1);border-bottom-color:var(--pur)}
 .lt span{font-size:14px}
 #panel{flex:1;overflow-y:auto;padding:11px 13px 30px}
 #panel::-webkit-scrollbar{width:3px}
@@ -47,10 +50,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;
 /* SLIDERS */
 .sw{margin-bottom:13px}
 .sh{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4px}
-.sl{font-size:11px;font-weight:700;color:rgba(255,255,255,0.9)}
-.sht{font-size:9px;color:rgba(255,255,255,0.37);margin-top:1px;line-height:1.3}
+.sl{font-size:11px;font-weight:700;color:rgba(30,27,75,0.9)}
+.sht{font-size:9px;color:rgba(30,27,75,0.37);margin-top:1px;line-height:1.3}
 .sv{font-size:14px;font-weight:900;line-height:1;text-align:left;flex-shrink:0;margin-right:6px}
-.sc{font-size:9px;color:#86efac;margin-top:1px;text-align:left}
+.sc{font-size:9px;color:#059669;margin-top:1px;text-align:left}
 .st{position:relative;height:24px;cursor:pointer}
 .st input[type=range]{position:absolute;top:0;left:0;width:100%;height:100%;
   opacity:0;cursor:pointer;z-index:3;margin:0;padding:0;
@@ -61,43 +64,43 @@ body{font-family:"Segoe UI",Arial,sans-serif;
   width:18px;height:18px;border-radius:50%;background:#fff;
   pointer-events:none;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.25)}
 .sm{display:flex;justify-content:space-between;margin-top:2px}
-.sm span{font-size:8px;color:rgba(255,255,255,0.22)}
+.sm span{font-size:8px;color:rgba(30,27,75,0.22)}
 /* SECTION */
 .sec-h{width:100%;display:flex;justify-content:space-between;align-items:center;
-  padding:8px 11px;border-radius:8px;border:none;color:#fff;font-size:11px;
+  padding:8px 11px;border-radius:8px;border:none;color:#1E1B4B;font-size:11px;
   font-weight:700;text-align:right;cursor:pointer;font-family:inherit;margin-bottom:3px}
 .sec-b{padding:8px 4px 4px}
 /* NI */
 .ni{display:flex;justify-content:space-between;align-items:center;
-  padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
-.ni-l{font-size:10px;color:rgba(255,255,255,0.75)}.ni-h{font-size:8px;color:rgba(255,255,255,0.3)}
-.ni-r{display:flex;align-items:center;gap:4px}.ni-u{font-size:9px;color:rgba(255,255,255,0.33)}
+  padding:6px 0;border-bottom:1px solid rgba(30,27,75,0.06)}
+.ni-l{font-size:10px;color:rgba(30,27,75,0.75)}.ni-h{font-size:8px;color:rgba(30,27,75,0.3)}
+.ni-r{display:flex;align-items:center;gap:4px}.ni-u{font-size:9px;color:rgba(30,27,75,0.33)}
 .ni input{width:74px;padding:4px 6px;border-radius:6px;border:1px solid rgba(123,111,232,0.45);
-  background:rgba(123,111,232,0.18);color:#fff;font-size:11px;font-weight:700;
+  background:rgba(123,111,232,0.18);color:#1E1B4B;font-size:11px;font-weight:700;
   text-align:center;outline:none;font-family:inherit;-moz-appearance:textfield}
 .ni input::-webkit-inner-spin-button,.ni input::-webkit-outer-spin-button{-webkit-appearance:none}
 /* TOGGLE */
 .tg{display:flex;justify-content:space-between;align-items:center;
-  padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
-.tg-l{font-size:10px;color:rgba(255,255,255,0.75)}
+  padding:7px 0;border-bottom:1px solid rgba(30,27,75,0.06)}
+.tg-l{font-size:10px;color:rgba(30,27,75,0.75)}
 .tg-s{width:36px;height:20px;border-radius:999px;position:relative;cursor:pointer;
   transition:background .2s;flex-shrink:0}
-.tg-s.on{background:var(--pur)}.tg-s.off{background:rgba(255,255,255,0.2)}
+.tg-s.on{background:var(--pur)}.tg-s.off{background:rgba(30,27,75,0.2)}
 .tg-d{position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s}
 .tg-s.on .tg-d{left:19px}.tg-s.off .tg-d{left:3px}
 /* TIERS */
 .tg-grid{display:grid;grid-template-columns:65px 65px 72px 26px;gap:4px;margin-bottom:6px}
-.tg-head{font-size:8px;color:rgba(255,255,255,0.4);font-weight:700;text-align:center;padding-bottom:2px}
-.tg-grid input{padding:5px;border-radius:6px;border:1px solid rgba(255,255,255,0.18);
-  background:rgba(255,255,255,0.08);color:#fff;font-size:11px;text-align:center;
+.tg-head{font-size:8px;color:rgba(30,27,75,0.4);font-weight:700;text-align:center;padding-bottom:2px}
+.tg-grid input{padding:5px;border-radius:6px;border:1px solid rgba(30,27,75,0.18);
+  background:rgba(30,27,75,0.08);color:#1E1B4B;font-size:11px;text-align:center;
   outline:none;width:100%;font-family:inherit;-moz-appearance:textfield}
 .tg-grid input::-webkit-inner-spin-button,.tg-grid input::-webkit-outer-spin-button{-webkit-appearance:none}
 .tr-rate{border-color:rgba(239,68,68,0.5)!important;background:rgba(239,68,68,0.15)!important;
-  color:#fca5a5!important;font-weight:700!important}
+  color:#DC2626!important;font-weight:700!important}
 .tr-rm{padding:4px;border-radius:5px;border:none;background:rgba(239,68,68,0.3);
-  color:#fca5a5;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
+  color:#DC2626;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit}
 .add-tr{width:100%;padding:6px;border-radius:7px;border:1px dashed rgba(239,68,68,0.4);
-  background:rgba(239,68,68,0.08);color:#fca5a5;font-size:10px;font-weight:600;
+  background:rgba(239,68,68,0.08);color:#DC2626;font-size:10px;font-weight:600;
   cursor:pointer;font-family:inherit;margin-top:4px}
 /* MEDIA OVERRIDES */
 .ov-list{margin-bottom:10px}
@@ -106,32 +109,32 @@ body{font-family:"Segoe UI",Arial,sans-serif;
   border:1px solid rgba(245,158,11,0.3)}
 .ov-item select,.ov-item input{flex:1;padding:5px 8px;border-radius:6px;
   border:1px solid rgba(245,158,11,0.45);background:rgba(245,158,11,0.15);
-  color:#fff;font-size:11px;font-weight:700;text-align:center;outline:none;
+  color:#1E1B4B;font-size:11px;font-weight:700;text-align:center;outline:none;
   font-family:inherit;-moz-appearance:textfield}
 .ov-item input::-webkit-inner-spin-button,.ov-item input::-webkit-outer-spin-button{-webkit-appearance:none}
-.ov-item select{background:rgba(30,27,75,0.9);cursor:pointer}
+.ov-item select{background:#F4F3FB;cursor:pointer}
 .ov-rm{padding:3px 8px;border-radius:5px;border:none;background:rgba(239,68,68,0.3);
-  color:#fca5a5;cursor:pointer;font-size:12px;font-family:inherit}
+  color:#DC2626;cursor:pointer;font-size:12px;font-family:inherit}
 .add-ov{width:100%;padding:8px;border-radius:8px;border:1px dashed rgba(245,158,11,0.4);
   background:rgba(245,158,11,0.08);color:var(--yel);font-size:10px;font-weight:600;
   cursor:pointer;font-family:inherit}
 /* EXTRA */
-.ex{background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;
-  margin-bottom:8px;border:1px solid rgba(255,255,255,0.1)}
+.ex{background:rgba(30,27,75,0.06);border-radius:10px;padding:10px 12px;
+  margin-bottom:8px;border:1px solid rgba(30,27,75,0.1)}
 .ex.on{border-color:rgba(123,111,232,0.35)}
 .ex-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
-.ex-d{background:transparent;border:none;color:#fff;font-size:11px;font-weight:700;
+.ex-d{background:transparent;border:none;color:#1E1B4B;font-size:11px;font-weight:700;
   outline:none;flex:1;font-family:inherit}
 .ex-rm{padding:2px 7px;border-radius:5px;border:none;background:rgba(239,68,68,0.25);
-  color:#fca5a5;cursor:pointer;font-size:11px;font-family:inherit}
+  color:#DC2626;cursor:pointer;font-size:11px;font-family:inherit}
 .ex-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.ex-f label{display:block;font-size:8px;color:rgba(255,255,255,0.4);margin-bottom:3px}
+.ex-f label{display:block;font-size:8px;color:rgba(30,27,75,0.4);margin-bottom:3px}
 .ex-f input,.ex-f select{width:100%;padding:5px;border-radius:6px;
   border:1px solid rgba(123,111,232,0.45);background:rgba(123,111,232,0.15);
-  color:#fff;font-size:11px;font-weight:700;text-align:center;outline:none;
+  color:#1E1B4B;font-size:11px;font-weight:700;text-align:center;outline:none;
   font-family:inherit;-moz-appearance:textfield}
 .ex-f input::-webkit-inner-spin-button,.ex-f input::-webkit-outer-spin-button{-webkit-appearance:none}
-.ex-f select{background:rgba(30,27,75,0.9);cursor:pointer;text-align:right}
+.ex-f select{background:#F4F3FB;cursor:pointer;text-align:right}
 /* MAIN */
 #main{flex:1;overflow-y:auto;padding:18px 20px 40px;min-width:0}
 #main::-webkit-scrollbar{width:4px}
@@ -237,17 +240,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height
 
 /* STEPPER+INPUT */
 .stp{margin-bottom:13px}
-.stp-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:3px}
-.stp-hint{font-size:8px;color:rgba(255,255,255,.3);margin-bottom:6px;display:block}
-.stp-calc{font-size:9px;color:#86efac;margin-top:4px;text-align:center}
-.stp-row{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.07);border-radius:11px;padding:3px}
+.stp-lbl{font-size:11px;font-weight:700;color:rgba(30,27,75,.9);margin-bottom:3px}
+.stp-hint{font-size:8px;color:rgba(30,27,75,.3);margin-bottom:6px;display:block}
+.stp-calc{font-size:9px;color:#059669;margin-top:4px;text-align:center}
+.stp-row{display:flex;align-items:center;gap:4px;background:rgba(30,27,75,.07);border-radius:11px;padding:3px}
 .stp-btn{width:38px;height:38px;border-radius:8px;border:none;font-size:19px;font-weight:900;
   cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
   user-select:none;-webkit-user-select:none;touch-action:none;transition:filter .1s}
 .stp-btn:active{filter:brightness(1.3)}
-.stp-m{background:rgba(239,68,68,.22);color:#fca5a5}
-.stp-p{background:rgba(16,185,129,.22);color:#86efac}
-.stp-inp{flex:1;border:none;background:transparent;color:#fff;font-size:17px;font-weight:900;
+.stp-m{background:rgba(239,68,68,.22);color:#DC2626}
+.stp-p{background:rgba(16,185,129,.22);color:#059669}
+.stp-inp{flex:1;border:none;background:transparent;color:#1E1B4B;font-size:17px;font-weight:900;
   text-align:center;outline:none;font-family:inherit;min-width:0;padding:4px 2px;
   -moz-appearance:textfield;cursor:text}
 .stp-inp::-webkit-inner-spin-button,.stp-inp::-webkit-outer-spin-button{-webkit-appearance:none}
@@ -269,14 +272,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height
           </linearGradient>
         </defs>
         <rect x="0" y="2" width="34" height="34" rx="10" fill="url(#psg)"/>
-        <text x="17" y="25" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="900" fill="#fff">PS</text>
-        <text x="44" y="17" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#fff">Public</text>
-        <text x="44" y="31" font-family="Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2.5" fill="#CFC7F7">SOLUTIONS</text>
+        <text x="17" y="25" text-anchor="middle" font-family="Assistant,Segoe UI,Arial,sans-serif" font-size="15" font-weight="900" fill="#fff">PS</text>
+        <text x="44" y="17" font-family="Assistant,Segoe UI,Arial,sans-serif" font-size="15" font-weight="800" fill="#1E1B4B">Public</text>
+        <text x="44" y="31" font-family="Assistant,Segoe UI,Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2.5" fill="#6C63F0">SOLUTIONS</text>
       </svg>
       <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap">
         <span class="ln">מיליונים 360</span>
         <span class="ls">סימולציה אינטראקטיבית</span>
-        <span class="lv">v34</span>
+        <span class="lv">v35</span>
       </div>
     </div>
     <div id="mtabs">
@@ -313,24 +316,24 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height
     <div id="stop-summary" style="display:none;border-radius:14px;padding:14px 16px;
       background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(217,119,6,.1));
       border:1px solid rgba(245,158,11,.4);margin-bottom:14px">
-      <div style="font-size:11px;font-weight:800;color:#FCD34D;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:800;color:#B45309;margin-bottom:10px">
         ⏸ תמונת מצב — הפסקה בחודש <span id="ss-month">?</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
         <div style="text-align:center">
-          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">תורמים שנשארו</div>
-          <div id="ss-pool" style="font-size:19px;font-weight:900;color:#FCD34D">—</div>
-          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">בחודש ההפסקה</div>
+          <div style="font-size:9px;color:rgba(30,27,75,.5);margin-bottom:4px">תורמים שנשארו</div>
+          <div id="ss-pool" style="font-size:19px;font-weight:900;color:#B45309">—</div>
+          <div style="font-size:8px;color:rgba(30,27,75,.35);margin-top:2px">בחודש ההפסקה</div>
         </div>
         <div style="text-align:center">
-          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">גבייה עתידית צפויה</div>
+          <div style="font-size:9px;color:rgba(30,27,75,.5);margin-bottom:4px">גבייה עתידית צפויה</div>
           <div id="ss-rev" style="font-size:19px;font-weight:900;color:#10B981">—</div>
-          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">מחודש הפסקה→96</div>
+          <div style="font-size:8px;color:rgba(30,27,75,.35);margin-top:2px">מחודש הפסקה→96</div>
         </div>
         <div style="text-align:center">
-          <div style="font-size:9px;color:rgba(255,255,255,.5);margin-bottom:4px">רווח כולל צפוי</div>
+          <div style="font-size:9px;color:rgba(30,27,75,.5);margin-bottom:4px">רווח כולל צפוי</div>
           <div id="ss-cum" style="font-size:19px;font-weight:900;color:#7B6FE8">—</div>
-          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-top:2px">מחודש 1→96</div>
+          <div style="font-size:8px;color:rgba(30,27,75,.35);margin-top:2px">מחודש 1→96</div>
         </div>
       </div>
     </div>
@@ -806,7 +809,7 @@ function drawTable(rows,bep,bal){
       if(S.stopMonth>0&&i===S.stopMonth-1)h+='<tr class="m-ms"><td colspan="'+baseCols+'" style="background:#FEF3C7;color:#92400E;border-top:2px dashed #F59E0B;padding:8px 14px">⏸ הפסקת קידום — מחודש '+(i+1)+' אין גיוס חדש. הפול הקיים פוחת טבעית</td></tr>';
       if(r.isStop)ph+=' stop-row';
       if(isBep)h+='<tr class="m-ms m-bep"><td colspan="'+(9+(hasRef?1:0)+(hasOvh?1:0)+2)+'" style="color:#7C3AED;border-top:2px solid #7B6FE8;border-bottom:2px solid #7B6FE8">🏆 נקודת האיזון — מחודש '+(bep+1)+' כל שקל הוא רווח טהור לעמותה</td></tr>';
-      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+(9+(hasRef?1:0)+(hasOvh?1:0)+2)+'" style="color:#10B981;border-top:1px solid #86efac">✅ איזון תזרימי — הכנסה = הוצאה חודשית</td></tr>';
+      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+(9+(hasRef?1:0)+(hasOvh?1:0)+2)+'" style="color:#10B981;border-top:1px solid #059669">✅ איזון תזרימי — הכנסה = הוצאה חודשית</td></tr>';
       h+='<tr class="'+ph+(isBep?' m-bep':'')+'">';
       h+='<td style="font-weight:700;color:'+mc+'">' +r.m+'</td>';
       h+='<td style="color:var(--grn)">'+ilsS(r.hokRev)+'</td>';
@@ -858,7 +861,7 @@ function drawTable(rows,bep,bal){
       if(S.stopMonth>0&&i===S.stopMonth-1)h+='<tr class="m-ms"><td colspan="'+baseCols+'" style="background:#FEF3C7;color:#92400E;border-top:2px dashed #F59E0B;padding:8px 14px">⏸ הפסקת קידום — מחודש '+(i+1)+' אין גיוס חדש. הפול הקיים פוחת טבעית</td></tr>';
       if(r.isStop)ph+=' stop-row';
       if(isBep)h+='<tr class="m-ms m-bep"><td colspan="'+fcols+'" style="color:#7C3AED;border-top:2px solid #7B6FE8;border-bottom:2px solid #7B6FE8">🏆 נקודת האיזון — מחודש '+(bep+1)+'</td></tr>';
-      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+fcols+'" style="color:#10B981;border-top:1px solid #86efac">✅ איזון תזרימי</td></tr>';
+      if(isBal)h+='<tr class="m-ms" style="background:#ECFDF5"><td colspan="'+fcols+'" style="color:#10B981;border-top:1px solid #059669">✅ איזון תזרימי</td></tr>';
       h+='<tr class="'+ph+(isBep?' m-bep':'')+'">';
       h+='<td style="font-weight:700;color:'+mc+'">'+r.m+'</td>';
       h+='<td style="font-size:9px">'+nl(r.leads)+'</td>';
@@ -926,7 +929,7 @@ function secW(id,icon,title,content,open,color){
 }
 function tiersW(mn){
   var t=S.m[mn].tiers,hokM=S.m[mn].hokMax||18;
-  var h='<div style="font-size:9px;color:rgba(255,255,255,0.4);margin-bottom:6px;line-height:1.4">'+
+  var h='<div style="font-size:9px;color:rgba(30,27,75,0.4);margin-bottom:6px;line-height:1.4">'+
     'מדרגות לפי חודש חיי התרומה (1–'+hokM+'). מחוץ לטווח = 0% ביטול.</div>'+
     '<div class="tg-grid"><div class="tg-head">מחודש</div><div class="tg-head">עד חודש</div>'+
     '<div class="tg-head">ביטול %</div><div class="tg-head"></div>';
@@ -938,7 +941,7 @@ function tiersW(mn){
       '<button class="tr-rm" onclick="trRm('+mn+','+i+')">✕</button>';
   }
   h+='</div>';
-  if(!t.length)h+='<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.3);padding:8px;border:1px dashed rgba(255,255,255,0.1);border-radius:8px;margin-bottom:6px">ריק = 0% ביטולים</div>';
+  if(!t.length)h+='<div style="text-align:center;font-size:10px;color:rgba(30,27,75,0.3);padding:8px;border:1px dashed rgba(30,27,75,0.1);border-radius:8px;margin-bottom:6px">ריק = 0% ביטולים</div>';
   if(t.length<10)h+='<button class="add-tr" onclick="trAdd('+mn+')">+ הוסף מדרגה</button>';
   return h;
 }
@@ -949,11 +952,11 @@ function renderPanel(){
 
   if(tab==='shared'){
     var sc=S.scenario,scCol=sc>0?'#10B981':sc<0?'#EF4444':'#7B6FE8';
-    p='<div id="scen-box"><div style="color:var(--purL);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🎛 תרחיש כולל</div>'+
+    p='<div id="scen-box"><div style="color:#6C63F0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🎛 תרחיש כולל</div>'+
       slW('sc',sc===0?'0% — בסיס':sc>0?'+'+sc+'% אופטימי':sc+'% פסימי',
           sc,-100,100,1,function(v){return v===0?'0%':v>0?'+'+v+'%':v+'%';},scCol,
           'מינוס=פסימי | פלוס=אופטימי | 0=בסיס',null)+
-      (sc!==0?'<button onclick="slCh(\'sc\',0);renderAll();" style="width:100%;padding:5px;border-radius:6px;border:none;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);cursor:pointer;font-size:10px;font-family:inherit">↩ חזור לבסיס</button>':'')+'</div>';
+      (sc!==0?'<button onclick="slCh(\'sc\',0);renderAll();" style="width:100%;padding:5px;border-radius:6px;border:none;background:rgba(30,27,75,0.1);color:rgba(30,27,75,0.6);cursor:pointer;font-size:10px;font-family:inherit">↩ חזור לבסיס</button>':'')+'</div>';
 
     p+=secW('sm','📢','מדיה וגיוס',
       slW('media','תקציב דיגיטל חודשי',S.media,5000,150000,1000,ilsS,'#64748B',null,'→ '+nl(leads)+' לידים/חודש')+
@@ -983,15 +986,15 @@ function renderPanel(){
   }
   else if(tab==='model'){
     var col=MC[mn];
-    p='<div style="background:'+col+'20;border-radius:10px;padding:9px 11px;margin-bottom:11px;border:1px solid '+col+'44"><div style="color:#fff;font-weight:700;font-size:11px">'+MN[mn]+'</div></div>';
+    p='<div style="background:'+col+'20;border-radius:10px;padding:9px 11px;margin-bottom:11px;border:1px solid '+col+'44"><div style="color:#1E1B4B;font-weight:700;font-size:11px">'+MN[mn]+'</div></div>';
     var commSlider=slW('comm','עמלת מיליונים %',mc.comm,0.05,0.40,0.005,pct,col,null,null);
     var hokMaxSlider=mn!==3?slW('hokMax','חודשי הו"ק (מחזור תרומה)',(mc.hokMax||18),6,mn===4?60:48,6,function(v){return v+'M';},col,null,'שווי תורם שלם: ₪'+nl((mc.hokMax||18)*S.avgHok)):'';
     var extra1=mn===1?'':mn===2?slW('preDed','ניכוי מוסכם מראש %',mc.preDed||0.035,0.01,0.50,0.005,pct,'#F97316','מנוכה מגיוס ברוטו לפני עמלה',null):'';
     p+=secW('sc'+mn,'💰','עמלה ומשך',commSlider+hokMaxSlider+extra1,true,col+'22');
 
-    var note1=mn===1?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ עמלה על גיוס חדש | ✓ קיזוז על ביטולים (חודש הבא) | ✓ עמלה על חידושים</div>':'';
-    var note2=mn===2?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ ביטולים משפיעים על גבייה בלבד | לא על העמלה | ✓ עמלה על חידושים</div>':'';
-    var note34=mn>=3?'<div style="font-size:9px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(255,255,255,0.06);border-radius:6px">✓ ביטול = פול קטן = גבייה נמוכה = עמלה נמוכה | ✓ חידושים מגדילים פול</div>':'';
+    var note1=mn===1?'<div style="font-size:9px;color:rgba(30,27,75,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(30,27,75,0.06);border-radius:6px">✓ עמלה על גיוס חדש | ✓ קיזוז על ביטולים (חודש הבא) | ✓ עמלה על חידושים</div>':'';
+    var note2=mn===2?'<div style="font-size:9px;color:rgba(30,27,75,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(30,27,75,0.06);border-radius:6px">✓ ביטולים משפיעים על גבייה בלבד | לא על העמלה | ✓ עמלה על חידושים</div>':'';
+    var note34=mn>=3?'<div style="font-size:9px;color:rgba(30,27,75,0.5);margin-bottom:8px;line-height:1.5;padding:6px 8px;background:rgba(30,27,75,0.06);border-radius:6px">✓ ביטול = פול קטן = גבייה נמוכה = עמלה נמוכה | ✓ חידושים מגדילים פול</div>':'';
     p+=secW('tr'+mn,'🔴','מדרגות ביטול (לפי חודש חיי תרומה)',note1+note2+note34+tiersW(mn),true,'rgba(239,68,68,0.14)');
 
     var ovh='';
@@ -999,12 +1002,12 @@ function renderPanel(){
       ovh='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">';
       [['mH','שעות ניהול/חודש','ש',1,200,1],['mR','תעריף ניהול','₪',50,1000,10],
        ['fH','שעות גיוס/חודש','ש',1,200,1],['fR','תעריף גיוס','₪',50,1000,10]].forEach(function(a){
-        ovh+='<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:8px">'+
-          '<div style="font-size:9px;color:rgba(255,255,255,0.45);margin-bottom:4px">'+a[1]+'</div>'+
+        ovh+='<div style="background:rgba(30,27,75,0.06);border-radius:8px;padding:8px">'+
+          '<div style="font-size:9px;color:rgba(30,27,75,0.45);margin-bottom:4px">'+a[1]+'</div>'+
           '<div style="display:flex;align-items:center;gap:4px">'+
-          '<span style="font-size:9px;color:rgba(255,255,255,0.3)">'+a[2]+'</span>'+
+          '<span style="font-size:9px;color:rgba(30,27,75,0.3)">'+a[2]+'</span>'+
           '<input type="number" value="'+mc[a[0]]+'" min="'+a[3]+'" max="'+a[4]+'" step="'+a[5]+
-          '" onchange="mkCh('+mn+',\''+a[0]+'\',+this.value)" style="flex:1;padding:4px 6px;border-radius:5px;border:1px solid '+col+'44;background:'+col+'18;color:#fff;font-size:12px;font-weight:700;text-align:center;outline:none;font-family:inherit;-moz-appearance:textfield">'+
+          '" onchange="mkCh('+mn+',\''+a[0]+'\',+this.value)" style="flex:1;padding:4px 6px;border-radius:5px;border:1px solid '+col+'44;background:'+col+'18;color:#1E1B4B;font-size:12px;font-weight:700;text-align:center;outline:none;font-family:inherit;-moz-appearance:textfield">'+
           '</div></div>';
       });
       ovh+='</div>';
@@ -1018,24 +1021,24 @@ function renderPanel(){
   }
   else if(tab==='media'){
     // ── Media overrides: clean list UI ──
-    p='<div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:9px 11px;margin-bottom:12px">'+
-      '<div style="font-size:10px;color:rgba(255,255,255,0.7);font-weight:700">תקציב בסיס: ₪'+nl(S.media)+'/חודש</div>'+
-      '<div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:3px">שנה בלשונית "משותף" → מדיה</div></div>';
+    p='<div style="background:rgba(30,27,75,0.06);border-radius:8px;padding:9px 11px;margin-bottom:12px">'+
+      '<div style="font-size:10px;color:rgba(30,27,75,0.7);font-weight:700">תקציב בסיס: ₪'+nl(S.media)+'/חודש</div>'+
+      '<div style="font-size:9px;color:rgba(30,27,75,0.4);margin-top:3px">שנה בלשונית "משותף" → מדיה</div></div>';
 
-    p+='<div style="font-size:10px;color:rgba(255,255,255,0.6);margin-bottom:10px;line-height:1.5">'+
+    p+='<div style="font-size:10px;color:rgba(30,27,75,0.6);margin-bottom:10px;line-height:1.5">'+
       '💡 הוסף עקיפה לחודש ספציפי. הגבייה, העמלה ורווח העמותה יחושבו בהתאם.</div>';
 
     if(S.ovList.length===0){
-      p+='<div style="text-align:center;font-size:10px;color:rgba(255,255,255,0.3);padding:16px;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;margin-bottom:10px">אין עקיפות — כל החודשים = תקציב בסיס</div>';
+      p+='<div style="text-align:center;font-size:10px;color:rgba(30,27,75,0.3);padding:16px;border:1px dashed rgba(30,27,75,0.12);border-radius:8px;margin-bottom:10px">אין עקיפות — כל החודשים = תקציב בסיס</div>';
     } else {
       p+='<div class="ov-list">';
       for(var i=0;i<S.ovList.length;i++){
         var ov=S.ovList[i];
         p+='<div class="ov-item">'+
-          '<span style="color:rgba(255,255,255,0.6);font-size:10px;white-space:nowrap">חודש</span>'+
+          '<span style="color:rgba(30,27,75,0.6);font-size:10px;white-space:nowrap">חודש</span>'+
           '<input type="number" value="'+ov.m+'" min="1" max="96" step="1" '+
           'onchange="ovCh('+i+',\'m\',+this.value)" style="max-width:60px">'+
-          '<span style="color:rgba(255,255,255,0.6);font-size:10px;white-space:nowrap">₪</span>'+
+          '<span style="color:rgba(30,27,75,0.6);font-size:10px;white-space:nowrap">₪</span>'+
           '<input type="number" value="'+ov.amt+'" min="0" step="1000" '+
           'onchange="ovCh('+i+',\'amt\',+this.value)">'+
           '<button class="ov-rm" onclick="ovRm('+i+')">✕</button></div>';
@@ -1050,21 +1053,21 @@ function renderPanel(){
     // ── STOP MONTH UI ──────────────────────────────────────
     var _stpOn=S.stopMonth>0;
     p='<div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:13px;margin-bottom:14px">';
-    p+='<div style="font-size:12px;font-weight:800;color:#FCD34D;margin-bottom:6px">⏸ הפסקת קידום ממומן</div>';
-    p+='<div style="font-size:9px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:10px">';
+    p+='<div style="font-size:12px;font-weight:800;color:#B45309;margin-bottom:6px">⏸ הפסקת קידום ממומן</div>';
+    p+='<div style="font-size:9px;color:rgba(30,27,75,.5);line-height:1.6;margin-bottom:10px">';
     p+='📌 מסלול 1: עמלה נפסקת ✓ | תקורות (שכר/ריטיינר) ממשיכות<br>';
     p+='📌 מסלול 2: עמלה נפסקת ✓ | אין תקורות ← כל הסליקה לעמותה<br>';
     p+='📌 מסלולים 3+4: עמלה על סליקה ממשיכה (% מהפול הפוחת)</div>';
     p+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(_stpOn?'10':'0')+'px">';
-    p+='<span style="font-size:11px;color:#fff;font-weight:700">הפעל מודל הפסקה</span>';
+    p+='<span style="font-size:11px;color:#1E1B4B;font-weight:700">הפעל מודל הפסקה</span>';
     p+='<div class="tg-s '+(_stpOn?'on':'off')+'" onclick="S.stopMonth=S.stopMonth>0?0:24;renderAll()"><div class="tg-d"></div></div>';
     p+='</div>';
     if(_stpOn){
       p+=slW('stopMonth','חודש הפסקת קידום',S.stopMonth,1,96,1,
-        function(v){return 'חודש '+v;},'#FCD34D','','→ מחודש זה: אין לידים, מדיה=₪0, הפול פוחת');
+        function(v){return 'חודש '+v;},'#B45309','','→ מחודש זה: אין לידים, מדיה=₪0, הפול פוחת');
     }
     p+='</div>';
-    p+='<div style="color:rgba(255,255,255,0.5);font-size:10px;margin-bottom:12px;line-height:1.6">הוצאות נוספות מתווספות לעלויות ומשפיעות על נקודת האיזון.</div>';
+    p+='<div style="color:rgba(30,27,75,0.5);font-size:10px;margin-bottom:12px;line-height:1.6">הוצאות נוספות מתווספות לעלויות ומשפיעות על נקודת האיזון.</div>';
     for(var ei=0;ei<S.ex.length;ei++){
       var e=S.ex[ei];
       p+='<div class="ex'+(e.on?' on':'')+'"><div class="ex-h">'+
@@ -1085,7 +1088,7 @@ function renderPanel(){
       }
       p+='</div>';
     }
-    if(S.ex.length<10)p+='<button onclick="exAdd()" style="width:100%;padding:9px;border-radius:8px;border:1px dashed rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:11px;font-family:inherit">+ הוסף הוצאה נוספת</button>';
+    if(S.ex.length<10)p+='<button onclick="exAdd()" style="width:100%;padding:9px;border-radius:8px;border:1px dashed rgba(30,27,75,0.2);background:transparent;color:rgba(30,27,75,0.5);cursor:pointer;font-size:11px;font-family:inherit">+ הוסף הוצאה נוספת</button>';
   }
 
   document.getElementById('panel').innerHTML=p;
